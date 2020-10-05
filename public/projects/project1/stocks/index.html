@@ -89,7 +89,7 @@
 <h1>myStocks</h1>
 <div id="get-data" class="section level2">
 <h2>get data</h2>
-<p>get stock prices of 7 China A-share companies and CSI 300 Index using <code>tidyquant</code> package</p>
+<p>get stock prices of 7 China A-share companies and Shanghai Stock Exchange (SSE) Composite Index using <code>tidyquant</code> package</p>
 <pre class="r"><code>myStocks &lt;- c(&quot;600519.SS&quot;, &quot;000651.SZ&quot;, &quot;601318.SS&quot;, &quot;600276.SS&quot;, &quot;600585.SS&quot;, &quot;000002.SZ&quot;,
               &quot;600009.SS&quot;, &quot;601398.SS&quot;, &quot;002594.SZ&quot;, &quot;000001.SS&quot;) %&gt;% 
   tq_get(get = &quot;stock.prices&quot;, 
@@ -112,7 +112,7 @@ myStocks &lt;- myStocks %&gt;%
 </div>
 <div id="stock-prices-trend" class="section level2">
 <h2>stock prices trend</h2>
-<p>plot close price trend of all stocks and CSI 300 index from <code>2015-01-01</code> to <code>2020-09-30</code></p>
+<p>plot close price trend of all stocks and SSE Composite index from <code>2015-01-01</code> to <code>2020-09-30</code></p>
 <pre class="r"><code>myStocks %&gt;% 
   ggplot(aes(x = date, y = close)) +
   geom_line() +
@@ -123,7 +123,7 @@ myStocks &lt;- myStocks %&gt;%
        y = &quot;close price&quot;,
        caption = &quot;sources: Yahoo Finance&quot;) +
   theme_bw()</code></pre>
-<p><img src="/projects/project1/index1_files/figure-html/plot-1.png" width="648" style="display: block; margin: auto;" /></p>
+<p><img src="/projects/project1/index1_files/figure-html/plot-1.png" width="1920" style="display: block; margin: auto;" /></p>
 </div>
 <div id="calculate-financial-returns" class="section level2">
 <h2>calculate financial returns</h2>
@@ -162,7 +162,7 @@ myStocks_returns_monthly &lt;- myStocks %&gt;%
   guides(color=FALSE) + #don&#39;t show legend
   theme_bw() +
   NULL</code></pre>
-<p><img src="/projects/project1/index1_files/figure-html/unnamed-chunk-1-1.png" width="648" style="display: block; margin: auto;" /></p>
+<p><img src="/projects/project1/index1_files/figure-html/unnamed-chunk-1-1.png" width="960" style="display: block; margin: auto;" /></p>
 </div>
 <div id="create-a-portfolio-of-assets" class="section level2">
 <h2>create a portfolio of assets</h2>
@@ -182,8 +182,8 @@ myStocks_returns_monthly &lt;- myStocks %&gt;%
   scale_y_continuous(labels = scales::percent) +
   geom_text(hjust = &quot;inward&quot;, vjust = &quot;inward&quot;) +
   theme_bw() +
-    theme(legend.position = &quot;none&quot;) </code></pre>
-<p><img src="/projects/project1/index1_files/figure-html/unnamed-chunk-3-1.png" width="648" style="display: block; margin: auto;" /></p>
+  theme(legend.position = &quot;none&quot;, plot.margin = unit(c(0.2,0.2,0.2,0.2), &quot;inches&quot;))</code></pre>
+<p><img src="/projects/project1/index1_files/figure-html/stock_risk_return%20plot-1.png" width="960" style="display: block; margin: auto;" /></p>
 </div>
 </div>
 

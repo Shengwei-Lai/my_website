@@ -43,7 +43,7 @@ library(tidyquant)
 
 # myStocks
 ## get data
-get stock prices of 7 China A-share companies and CSI 300 Index using `tidyquant` package
+get stock prices of 7 China A-share companies and Shanghai Stock Exchange (SSE) Composite Index using `tidyquant` package
 
 ``` {r myStocks}
 myStocks <- c("600519.SS", "000651.SZ", "601318.SS", "600276.SS", "600585.SS", "000002.SZ",
@@ -68,9 +68,9 @@ myStocks <- myStocks %>%
 ```
 
 ## stock prices trend
-plot close price trend of all stocks and CSI 300 index from `2015-01-01` to `2020-09-30`
+plot close price trend of all stocks and SSE Composite index from `2015-01-01` to `2020-09-30`
 
-``` {r plot}
+``` {r plot, fig.height=10, fig.width=20}
 myStocks %>% 
   ggplot(aes(x = date, y = close)) +
   geom_line() +
@@ -110,7 +110,7 @@ myStocks_returns_monthly <- myStocks %>%
 
 plot monthly returns
 
-``` {r}
+``` {r, fig.height=5, fig.width=10}
 myStocks_returns_monthly %>% 
   group_by(name) %>% 
   mutate(median_monthly_return = median(monthly.returns)) %>% 
@@ -136,7 +136,7 @@ stocks_risk_return <- myStocks_returns_monthly %>%
   left_join(name)
 ```
 
-``` {r}
+``` {r stock_risk_return plot, fig.height=5, fig.width=10}
 stocks_risk_return %>% 
   ggplot(aes(x = Stdev, y = ArithmeticMean, color = name, label = name)) +
   geom_point(size = 4) +
@@ -149,6 +149,6 @@ stocks_risk_return %>%
   scale_y_continuous(labels = scales::percent) +
   geom_text(hjust = "inward", vjust = "inward") +
   theme_bw() +
-    theme(legend.position = "none") 
+  theme(legend.position = "none", plot.margin = unit(c(0.2,0.2,0.2,0.2), "inches"))
 ```
 
