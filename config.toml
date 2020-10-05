@@ -212,7 +212,7 @@ disqusShortname = ""
 
     [[params.footer.social]]
       icon = "fa-linkedin"
-      url= "www.linkedin.com/in/shengwei-lai-b70a27169"
+      url= "www.linkedin.com/in/shengwei-lai-b70a27169/"
       label = "LinkedIn"
 
     [[params.footer.quicklinks]]
