@@ -212,10 +212,10 @@ disqusShortname = ""
 
     [[params.footer.social]]
       icon = "fa-linkedin"
-      url= "www.linkedin.com/in/shengwei-lai-b70a27169/"
+      url= "https://www.linkedin.com/in/shengwei-lai-b70a27169/"
       label = "LinkedIn"
 
     [[params.footer.quicklinks]]
-      text = "Design: "
-      url= "https://www.html5up.net"
-      alt = "HTML5 UP"
+#      text = "Design: "
+#      url= "https://www.html5up.net"
+#      alt = "HTML5 UP"
