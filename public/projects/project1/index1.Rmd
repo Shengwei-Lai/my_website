@@ -1,0 +1,154 @@
+---
+title: "selected stocks in China A-share market"
+date: '2020-10-05'
+description: ''
+draft: no
+image: pic10.jpg
+keywords: ''
+slug: stocks
+categories:
+- ''
+- ''
+---
+
+```{r, setup, include=FALSE}
+knitr::opts_chunk$set(
+  message = FALSE, 
+  warning = FALSE, 
+  tidy=FALSE,     # display code as typed
+  size="small")   # slightly smaller font for code
+options(digits = 3)
+
+# default figure size
+knitr::opts_chunk$set(
+  fig.width=6.75, 
+  fig.height=6.75,
+  fig.align = "center"
+)
+```
+
+```{r load-libraries, include=FALSE}
+library(tidyverse)  # Load ggplot2, dplyr, and all the other tidyverse packages
+library(mosaic)
+library(ggthemes)
+library(lubridate)
+library(here)
+library(skimr)
+library(janitor)
+library(httr)
+library(readxl)
+library(vroom)
+library(tidyquant)
+```
+
+# myStocks
+## get data
+get stock prices of 7 China A-share companies and CSI 300 Index using `tidyquant` package
+
+``` {r myStocks}
+myStocks <- c("600519.SS", "000651.SZ", "601318.SS", "600276.SS", "600585.SS", "000002.SZ",
+              "600009.SS", "601398.SS", "002594.SZ", "000001.SS") %>% 
+  tq_get(get = "stock.prices", 
+         from = "2015-01-01",
+         to = "2020-09-30") %>%
+  group_by(symbol)
+
+name <- data.frame(name = c("Moutai", "Gree", "PingAn", "Hengrui", "Conch Cement", "Vanke", 
+                            "Shanghai Airport", "ICBC", "BYD", "SSE Index"), 
+                   symbol = c("600519.SS", "000651.SZ", "601318.SS", "600276.SS", "600585.SS",
+                              "000002.SZ", "600009.SS", "601398.SS", "002594.SZ", "000001.SS"))
+
+name$name <- factor(name$name, 
+                    levels = name$name,
+                    ordered = TRUE)
+
+myStocks <- myStocks %>% 
+  left_join(name)
+#stocks: Kweichow Moutai, Gree Electric Appliances, Ping An Insurance, Hengrui Medicine, Conch Cement, China Vanke, Shanghai International Airport, Industrial and Commercial Bank of China, BYD, CSI 300 Index
+```
+
+## stock prices trend
+plot close price trend of all stocks and CSI 300 index from `2015-01-01` to `2020-09-30`
+
+``` {r plot}
+myStocks %>% 
+  ggplot(aes(x = date, y = close)) +
+  geom_line() +
+  facet_wrap(~name, scales = "free") +
+  labs(title = "price trend of 9 stocks and SSE Composite index in China A-share market",
+       subtitle = "from 2015-01-01 to 2020-09-30",
+       x = "",
+       y = "close price",
+       caption = "sources: Yahoo Finance") +
+  theme_bw()
+```
+
+## calculate financial returns
+Calculate daily and monthly returns
+
+``` {r returns}
+#daily return
+myStocks_returns_daily <- myStocks %>%
+  tq_transmute(select = adjusted, 
+               mutate_fun = periodReturn, 
+               period = "daily", 
+               type = "log",
+               col_rename = "daily.returns",
+               cols = c(nested.col)) %>% 
+  left_join(name)
+
+#monthly return
+myStocks_returns_monthly <- myStocks %>%
+  tq_transmute(select = adjusted, 
+               mutate_fun = periodReturn, 
+               period = "monthly", 
+               type = "arithmetic",
+               col_rename = "monthly.returns",
+               cols = c(nested.col)) %>% 
+  left_join(name)
+```
+
+plot monthly returns
+
+``` {r}
+myStocks_returns_monthly %>% 
+  group_by(name) %>% 
+  mutate(median_monthly_return = median(monthly.returns)) %>% 
+  ggplot(aes(x = monthly.returns, y = reorder(name, median_monthly_return),color = name)) +
+  geom_boxplot() +
+  labs(title = "boxplot of monthly median return",
+       subtitle = "from 2015-01-01 to 2020-09-30",
+       x = "monthly return",
+       y = "stocks", 
+       caption = "sources: Yahoo Finance") +
+  scale_x_continuous(labels = scales::percent_format()) +
+  guides(color=FALSE) + #don't show legend
+  theme_bw() +
+  NULL
+```
+
+## create a portfolio of assets
+
+``` {r}
+stocks_risk_return <- myStocks_returns_monthly %>% 
+  tq_performance(Ra = monthly.returns, Rb = NULL, performance_fun = table.Stats) %>% 
+  select(symbol,ArithmeticMean, GeometricMean, Minimum,Maximum,Stdev, Quartile1, Quartile3) %>% 
+  left_join(name)
+```
+
+``` {r}
+stocks_risk_return %>% 
+  ggplot(aes(x = Stdev, y = ArithmeticMean, color = name, label = name)) +
+  geom_point(size = 4) +
+  labs(title = "risk-return profile",
+       subtitle = "from 2015-01-01 to 2020-09-30",
+       x = "Risk (stdev of monthly returns)",
+       y = "Average monthly return", 
+       caption = "sources: Yahoo Finance") +
+  scale_x_continuous(labels = scales::percent) +
+  scale_y_continuous(labels = scales::percent) +
+  geom_text(hjust = "inward", vjust = "inward") +
+  theme_bw() +
+    theme(legend.position = "none") 
+```
+

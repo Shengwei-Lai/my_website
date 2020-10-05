@@ -6,7 +6,17 @@
     <description>Recent content on Portfolio website for Shengwei Lai</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 31 Oct 2017 22:42:51 -0500</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 05 Oct 2020 00:00:00 +0000</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>selected stocks in China A-share market</title>
+      <link>/projects/project1/stocks/</link>
+      <pubDate>Mon, 05 Oct 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/projects/project1/stocks/</guid>
+      <description>myStocksget dataget stock prices of 7 China A-share companies and CSI 300 Index using tidyquant package
+myStocks &amp;lt;- c(&amp;quot;600519.SS&amp;quot;, &amp;quot;000651.SZ&amp;quot;, &amp;quot;601318.SS&amp;quot;, &amp;quot;600276.SS&amp;quot;, &amp;quot;600585.SS&amp;quot;, &amp;quot;000002.SZ&amp;quot;,&amp;quot;600009.SS&amp;quot;, &amp;quot;601398.SS&amp;quot;, &amp;quot;002594.SZ&amp;quot;, &amp;quot;000001.SS&amp;quot;) %&amp;gt;% tq_get(get = &amp;quot;stock.prices&amp;quot;, from = &amp;quot;2015-01-01&amp;quot;,to = &amp;quot;2020-09-30&amp;quot;) %&amp;gt;%group_by(symbol)name &amp;lt;- data.frame(name = c(&amp;quot;Moutai&amp;quot;, &amp;quot;Gree&amp;quot;, &amp;quot;PingAn&amp;quot;, &amp;quot;Hengrui&amp;quot;, &amp;quot;Conch Cement&amp;quot;, &amp;quot;Vanke&amp;quot;, &amp;quot;Shanghai Airport&amp;quot;, &amp;quot;ICBC&amp;quot;, &amp;quot;BYD&amp;quot;, &amp;quot;SSE Index&amp;quot;), symbol = c(&amp;quot;600519.SS&amp;quot;, &amp;quot;000651.SZ&amp;quot;, &amp;quot;601318.SS&amp;quot;, &amp;quot;600276.SS&amp;quot;, &amp;quot;600585.SS&amp;quot;,&amp;quot;000002.SZ&amp;quot;, &amp;quot;600009.SS&amp;quot;, &amp;quot;601398.SS&amp;quot;, &amp;quot;002594.</description>
+    </item>
+    
     <item>
       <title>Aliquam</title>
       <link>/blogs/aliquam/</link>
