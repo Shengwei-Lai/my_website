@@ -50,6 +50,58 @@ library(tmap) #mapping eurostat data
 download data from [Eurostat](https://ec.europa.eu/eurostat/databrowser/view/irt_euryld_m/default/table?lang=en)
 ```{r getdata}
 yield_curve <- get_eurostat(id="irt_euryld_m")
+yield_curve$maturity <- factor(yield_curve$maturity,
+                               ordered = TRUE,
+                               levels = c("Y1","Y2","Y3","Y4","Y5","Y6","Y7","Y8","Y9","Y10",
+                                          "Y11","Y12","Y13","Y14","Y15","Y16","Y17","Y18","Y19",
+                                          "Y20","Y21","Y22","Y23","Y24","Y25","Y26","Y27","Y28",
+                                          "Y29","Y30")) #order maturity
 glimpse(yield_curve)
 skim(yield_curve)
+
+yield_curve <- yield_curve %>% 
+  mutate(year = year(time),
+         month = month(time))
 ```
+
+
+## slope
+During financial crisis and recessions, the yield difference of 30-year and 1-year government bonds tends to be smaller.
+```{r spotrate}
+yield_curve %>% 
+  pivot_wider(names_from = "maturity",
+              values_from = "values") %>% 
+  mutate(slope = Y30 - Y1) %>% #calculate slope
+  filter(yld_curv == "SPOT_RT", #spot rate
+         bonds == "CGB_EA") %>% #all euro area central government bonds
+  ggplot(aes(x = time, y = slope)) +
+  geom_line() +
+  labs(title = "spot rate difference of 30-year and 1-year bonds",
+       subtitle = "all euro area central government bonds",
+       caption = "Sources: Eurostat, code = irt_euryld_m",
+       x = "",
+       y = "spot rate difference") +
+  scale_y_continuous(breaks = c(0,1,2,3,4)) +
+  theme_bw()
+```
+## spread
+Yield spread of AAA-rated and all government bonds widened from 2010 to 2015, mainly caused by Greece debt crisis. In other times, investors believe there is little probability that governments default their bonds.
+
+```{r}
+yield_curve %>% 
+  pivot_wider(names_from = "bonds",
+              values_from = "values") %>% 
+  mutate(spread = CGB_EA_AAA - CGB_EA) %>% #calculate slope
+  filter(yld_curv == "SPOT_RT", #spot rate
+         maturity == "Y1") %>% #all euro area central government bonds
+  ggplot(aes(x = time, y = spread)) +
+  geom_line() +
+  labs(title = "yield difference of AAA-rated and all government bonds",
+       subtitle = "1-year maturity",
+       caption = "Sources: Eurostat, code = irt_euryld_m",
+       x = "",
+       y = "yield spread") +
+  theme_bw()
+```
+
+

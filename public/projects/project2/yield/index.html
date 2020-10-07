@@ -91,12 +91,18 @@
 <h2>get data</h2>
 <p>download data from <a href="https://ec.europa.eu/eurostat/databrowser/view/irt_euryld_m/default/table?lang=en">Eurostat</a></p>
 <pre class="r"><code>yield_curve &lt;- get_eurostat(id=&quot;irt_euryld_m&quot;)
+yield_curve$maturity &lt;- factor(yield_curve$maturity,
+                               ordered = TRUE,
+                               levels = c(&quot;Y1&quot;,&quot;Y2&quot;,&quot;Y3&quot;,&quot;Y4&quot;,&quot;Y5&quot;,&quot;Y6&quot;,&quot;Y7&quot;,&quot;Y8&quot;,&quot;Y9&quot;,&quot;Y10&quot;,
+                                          &quot;Y11&quot;,&quot;Y12&quot;,&quot;Y13&quot;,&quot;Y14&quot;,&quot;Y15&quot;,&quot;Y16&quot;,&quot;Y17&quot;,&quot;Y18&quot;,&quot;Y19&quot;,
+                                          &quot;Y20&quot;,&quot;Y21&quot;,&quot;Y22&quot;,&quot;Y23&quot;,&quot;Y24&quot;,&quot;Y25&quot;,&quot;Y26&quot;,&quot;Y27&quot;,&quot;Y28&quot;,
+                                          &quot;Y29&quot;,&quot;Y30&quot;)) #order maturity
 glimpse(yield_curve)</code></pre>
 <pre><code>## Rows: 34,740
 ## Columns: 6
 ## $ yld_curv &lt;chr&gt; &quot;INS_FWD&quot;, &quot;INS_FWD&quot;, &quot;INS_FWD&quot;, &quot;INS_FWD&quot;, &quot;INS_FWD&quot;, &quot;IN...
 ## $ bonds    &lt;chr&gt; &quot;CGB_EA&quot;, &quot;CGB_EA&quot;, &quot;CGB_EA&quot;, &quot;CGB_EA&quot;, &quot;CGB_EA&quot;, &quot;CGB_EA&quot;...
-## $ maturity &lt;chr&gt; &quot;Y1&quot;, &quot;Y10&quot;, &quot;Y11&quot;, &quot;Y12&quot;, &quot;Y13&quot;, &quot;Y14&quot;, &quot;Y15&quot;, &quot;Y16&quot;, &quot;Y1...
+## $ maturity &lt;ord&gt; Y1, Y10, Y11, Y12, Y13, Y14, Y15, Y16, Y17, Y18, Y19, Y2, ...
 ## $ geo      &lt;chr&gt; &quot;EA&quot;, &quot;EA&quot;, &quot;EA&quot;, &quot;EA&quot;, &quot;EA&quot;, &quot;EA&quot;, &quot;EA&quot;, &quot;EA&quot;, &quot;EA&quot;, &quot;EA&quot;...
 ## $ time     &lt;date&gt; 2020-09-01, 2020-09-01, 2020-09-01, 2020-09-01, 2020-09-0...
 ## $ values   &lt;dbl&gt; -0.51, 0.62, 0.74, 0.84, 0.93, 1.00, 1.07, 1.13, 1.18, 1.2...</code></pre>
@@ -126,21 +132,25 @@ glimpse(yield_curve)</code></pre>
 </tr>
 <tr class="even">
 <td align="left">character</td>
-<td align="left">4</td>
+<td align="left">3</td>
 </tr>
 <tr class="odd">
 <td align="left">Date</td>
 <td align="left">1</td>
 </tr>
 <tr class="even">
-<td align="left">numeric</td>
+<td align="left">factor</td>
 <td align="left">1</td>
 </tr>
 <tr class="odd">
+<td align="left">numeric</td>
+<td align="left">1</td>
+</tr>
+<tr class="even">
 <td align="left">________________________</td>
 <td align="left"></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">Group variables</td>
 <td align="left">None</td>
 </tr>
@@ -182,16 +192,6 @@ glimpse(yield_curve)</code></pre>
 <td align="right">0</td>
 </tr>
 <tr class="odd">
-<td align="left">maturity</td>
-<td align="right">0</td>
-<td align="right">1</td>
-<td align="right">2</td>
-<td align="right">3</td>
-<td align="right">0</td>
-<td align="right">30</td>
-<td align="right">0</td>
-</tr>
-<tr class="even">
 <td align="left">geo</td>
 <td align="right">0</td>
 <td align="right">1</td>
@@ -228,6 +228,29 @@ glimpse(yield_curve)</code></pre>
 </tr>
 </tbody>
 </table>
+<p><strong>Variable type: factor</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">skim_variable</th>
+<th align="right">n_missing</th>
+<th align="right">complete_rate</th>
+<th align="left">ordered</th>
+<th align="right">n_unique</th>
+<th align="left">top_counts</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">maturity</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">TRUE</td>
+<td align="right">30</td>
+<td align="left">Y1: 1158, Y2: 1158, Y3: 1158, Y4: 1158</td>
+</tr>
+</tbody>
+</table>
 <p><strong>Variable type: numeric</strong></p>
 <table>
 <thead>
@@ -261,6 +284,46 @@ glimpse(yield_curve)</code></pre>
 </tr>
 </tbody>
 </table>
+<pre class="r"><code>yield_curve &lt;- yield_curve %&gt;% 
+  mutate(year = year(time),
+         month = month(time))</code></pre>
+</div>
+<div id="slope" class="section level2">
+<h2>slope</h2>
+<p>During financial crisis and recessions, the yield difference of 30-year and 1-year government bonds tends to be smaller.</p>
+<pre class="r"><code>yield_curve %&gt;% 
+  pivot_wider(names_from = &quot;maturity&quot;,
+              values_from = &quot;values&quot;) %&gt;% 
+  mutate(slope = Y30 - Y1) %&gt;% #calculate slope
+  filter(yld_curv == &quot;SPOT_RT&quot;, #spot rate
+         bonds == &quot;CGB_EA&quot;) %&gt;% #all euro area central government bonds
+  ggplot(aes(x = time, y = slope)) +
+  geom_line() +
+  labs(title = &quot;spot rate difference of 30-year and 1-year bonds&quot;,
+       subtitle = &quot;all euro area central government bonds&quot;,
+       caption = &quot;Sources: Eurostat, code = irt_euryld_m&quot;,
+       x = &quot;&quot;,
+       y = &quot;spot rate difference&quot;) +
+  scale_y_continuous(breaks = c(0,1,2,3,4)) +
+  theme_bw()</code></pre>
+<p><img src="/projects/project2/index2_files/figure-html/spotrate-1.png" width="648" style="display: block; margin: auto;" />
+## spread
+Yield spread of AAA-rated and all government bonds widened from 2010 to 2015, mainly caused by Greece debt crisis. In other times, investors believe there is little probability that governments default their bonds.</p>
+<pre class="r"><code>yield_curve %&gt;% 
+  pivot_wider(names_from = &quot;bonds&quot;,
+              values_from = &quot;values&quot;) %&gt;% 
+  mutate(spread = CGB_EA_AAA - CGB_EA) %&gt;% #calculate slope
+  filter(yld_curv == &quot;SPOT_RT&quot;, #spot rate
+         maturity == &quot;Y1&quot;) %&gt;% #all euro area central government bonds
+  ggplot(aes(x = time, y = spread)) +
+  geom_line() +
+  labs(title = &quot;yield difference of AAA-rated and all government bonds&quot;,
+       subtitle = &quot;1-year maturity&quot;,
+       caption = &quot;Sources: Eurostat, code = irt_euryld_m&quot;,
+       x = &quot;&quot;,
+       y = &quot;yield spread&quot;) +
+  theme_bw()</code></pre>
+<p><img src="/projects/project2/index2_files/figure-html/unnamed-chunk-1-1.png" width="648" style="display: block; margin: auto;" /></p>
 </div>
 </div>
 
