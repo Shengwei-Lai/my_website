@@ -1,0 +1,66 @@
+---
+title: "Covid 19"
+date: '2020-10-05'
+description: ''
+draft: no
+image: pic10.jpg
+keywords: ''
+slug: covid
+categories:
+- ''
+- ''
+---
+
+```{r, setup, include=FALSE}
+knitr::opts_chunk$set(
+  message = FALSE, 
+  warning = FALSE, 
+  tidy=FALSE,     # display code as typed
+  size="small")   # slightly smaller font for code
+options(digits = 3)
+
+# default figure size
+knitr::opts_chunk$set(
+  fig.width=6.75, 
+  fig.height=6.75,
+  fig.align = "center"
+)
+```
+
+```{r load-libraries, include=FALSE}
+library(tidyverse)  # Load ggplot2, dplyr, and all the other tidyverse packages
+library(mosaic)
+library(ggthemes)
+library(lubridate)
+library(here)
+library(skimr)
+library(janitor)
+library(httr)
+library(readxl)
+library(vroom)
+library(tidyquant)
+```
+
+# Covid 19 data
+## get data
+```{r cache=TRUE}
+owid_covid_data <- read_csv(here::here('content/projects/project2', 'owid-covid-data.csv')) 
+```
+
+## total cases and deaths by continent
+create a new data set by continent and date
+```{r}
+covid_region <- owid_covid_data %>% 
+  filter(continent!="NA") %>% 
+  group_by(continent, date) %>% 
+  summarise(total_cases_cotinent = sum(total_cases, na.rm = TRUE),
+            total_deaths_continent = sum(total_deaths, na.rm = TRUE))
+```
+
+total cases by continent
+```{r, fig.height=5, fig.width=10}
+covid_region %>% 
+  ggplot(aes(x = date, y = total_cases_cotinent, fill = continent)) +
+  geom_area() +
+  theme_bw()
+```

@@ -1,0 +1,37 @@
+---
+title: "Covid 19"
+date: '2020-10-05'
+description: ''
+draft: no
+image: pic10.jpg
+keywords: ''
+slug: covid
+categories:
+- ''
+- ''
+---
+
+
+
+<div id="covid-19-data" class="section level1">
+<h1>Covid 19 data</h1>
+<div id="get-data" class="section level2">
+<h2>get data</h2>
+<pre class="r"><code>owid_covid_data &lt;- read_csv(here::here(&#39;content/projects/project2&#39;, &#39;owid-covid-data.csv&#39;)) </code></pre>
+</div>
+<div id="total-cases-and-deaths-by-continent" class="section level2">
+<h2>total cases and deaths by continent</h2>
+<p>create a new data set by continent and date</p>
+<pre class="r"><code>covid_region &lt;- owid_covid_data %&gt;% 
+  filter(continent!=&quot;NA&quot;) %&gt;% 
+  group_by(continent, date) %&gt;% 
+  summarise(total_cases_cotinent = sum(total_cases, na.rm = TRUE),
+            total_deaths_continent = sum(total_deaths, na.rm = TRUE))</code></pre>
+<p>total cases by continent</p>
+<pre class="r"><code>covid_region %&gt;% 
+  ggplot(aes(x = date, y = total_cases_cotinent, fill = continent)) +
+  geom_area() +
+  theme_bw()</code></pre>
+<p><img src="/projects/project2/index2_files/figure-html/unnamed-chunk-3-1.png" width="960" style="display: block; margin: auto;" /></p>
+</div>
+</div>

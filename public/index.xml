@@ -6,7 +6,28 @@
     <description>Recent content on Portfolio website for Shengwei Lai</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 05 Oct 2020 00:00:00 +0000</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 07 Oct 2020 00:00:00 +0000</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Gas price</title>
+      <link>/projects/project3/gas/</link>
+      <pubDate>Wed, 07 Oct 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/projects/project3/gas/</guid>
+      <description>gas price in Europeget datadownload data from Eurostat
+gas_price &amp;lt;- get_eurostat(id=&amp;quot;nrg_pc_202&amp;quot;)glimpse(gas_price)## Rows: 42,160## Columns: 8## $ product &amp;lt;chr&amp;gt; &amp;quot;4100&amp;quot;, &amp;quot;4100&amp;quot;, &amp;quot;4100&amp;quot;, &amp;quot;4100&amp;quot;, &amp;quot;4100&amp;quot;, &amp;quot;4100&amp;quot;, &amp;quot;4100&amp;quot;, &amp;quot;4...## $ consom &amp;lt;chr&amp;gt; &amp;quot;4141901&amp;quot;, &amp;quot;4141901&amp;quot;, &amp;quot;4141901&amp;quot;, &amp;quot;4141901&amp;quot;, &amp;quot;4141901&amp;quot;, &amp;quot;41...## $ unit &amp;lt;chr&amp;gt; &amp;quot;GJ_GCV&amp;quot;, &amp;quot;GJ_GCV&amp;quot;, &amp;quot;GJ_GCV&amp;quot;, &amp;quot;GJ_GCV&amp;quot;, &amp;quot;GJ_GCV&amp;quot;, &amp;quot;GJ_GCV&amp;quot;...## $ tax &amp;lt;chr&amp;gt; &amp;quot;I_TAX&amp;quot;, &amp;quot;I_TAX&amp;quot;, &amp;quot;I_TAX&amp;quot;, &amp;quot;I_TAX&amp;quot;, &amp;quot;I_TAX&amp;quot;, &amp;quot;I_TAX&amp;quot;, &amp;quot;I_T...## $ currency &amp;lt;chr&amp;gt; &amp;quot;EUR&amp;quot;, &amp;quot;EUR&amp;quot;, &amp;quot;EUR&amp;quot;, &amp;quot;EUR&amp;quot;, &amp;quot;EUR&amp;quot;, &amp;quot;EUR&amp;quot;, &amp;quot;EUR&amp;quot;, &amp;quot;EUR&amp;quot;, &amp;quot;E.</description>
+    </item>
+    
+    <item>
+      <title>Covid 19</title>
+      <link>/projects/project2/covid/</link>
+      <pubDate>Mon, 05 Oct 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/projects/project2/covid/</guid>
+      <description>Covid 19 dataget dataowid_covid_data &amp;lt;- read_csv(here::here(&amp;#39;content/projects/project2&amp;#39;, &amp;#39;owid-covid-data.csv&amp;#39;)) total cases and deaths by continentcreate a new data set by continent and date
+covid_region &amp;lt;- owid_covid_data %&amp;gt;% filter(continent!=&amp;quot;NA&amp;quot;) %&amp;gt;% group_by(continent, date) %&amp;gt;% summarise(total_cases_cotinent = sum(total_cases, na.rm = TRUE),total_deaths_continent = sum(total_deaths, na.rm = TRUE))total cases by continent
+covid_region %&amp;gt;% ggplot(aes(x = date, y = total_cases_cotinent, fill = continent)) +geom_area() +theme_bw()</description>
+    </item>
+    
     <item>
       <title>selected stocks in China A-share market</title>
       <link>/projects/project1/stocks/</link>

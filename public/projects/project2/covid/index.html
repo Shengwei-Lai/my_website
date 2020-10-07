@@ -1,0 +1,166 @@
+<!DOCTYPE HTML>
+<html>
+
+    <head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+	<meta name="description" content="MFA2021">
+	<meta name="author" content="Shengwei Lai">
+	<meta name="generator" content="Hugo 0.75.1" />
+	<title>Covid 19 &middot; Portfolio website for Shengwei Lai</title>
+	<!-- Stylesheets -->
+	
+	<link rel="stylesheet" href="/css/main.css"/>
+	
+	
+
+	
+
+	<!-- Custom Fonts -->
+	<link href="/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+	
+	<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+	<link rel="icon" type="image/x-icon" href="/favicon.ico">
+	
+
+	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+	<!--[if lt IE 9]>
+	<script src="js/ie/html5shiv.js"></script>
+	<script src="js/ie/html5shiv.jsrespond.min.js"></script>
+	<![endif]-->
+</head>
+
+    <body>
+
+    <!-- Wrapper -->
+        <div id="wrapper">
+
+            <!-- Header -->
+    <header id="header" class="alt">
+        <a href="/" class="logo"><strong>Shengwei Lai</strong> <span>MFA2021</span></a>
+        <nav>
+            <a href="#menu">Menu</a>
+        </nav>
+    </header>
+
+<!-- Menu -->
+    <nav id="menu">
+        <ul class="links">
+            
+                <li><a href="/">Home</a></li>
+            
+                <li><a href="/blogs">Blogs</a></li>
+            
+                <li><a href="/blogs/ipsum">Generic Blog</a></li>
+            
+                <li><a href="/elements.html">Elements</a></li>
+            
+
+        </ul>
+        <ul class="actions vertical">
+            
+                <li><a href="/blogs" class="button special fit">Get Started</a></li>
+            
+            
+                <li><a href="/" class="button fit">Log In</a></li>
+            
+        </ul>
+    </nav>
+
+        <!-- Main -->
+            <div id="main" class="alt">
+
+                
+                    <section id="one">
+                        <div class="inner">
+                            <header class="major">
+                                <h1>Covid 19</h1>
+                            </header>
+                            
+                                <span class="image main"><img src="/img/projects/pic10.jpg" alt="" /></span>
+                            
+                            
+
+
+<div id="covid-19-data" class="section level1">
+<h1>Covid 19 data</h1>
+<div id="get-data" class="section level2">
+<h2>get data</h2>
+<pre class="r"><code>owid_covid_data &lt;- read_csv(here::here(&#39;content/projects/project2&#39;, &#39;owid-covid-data.csv&#39;)) </code></pre>
+</div>
+<div id="total-cases-and-deaths-by-continent" class="section level2">
+<h2>total cases and deaths by continent</h2>
+<p>create a new data set by continent and date</p>
+<pre class="r"><code>covid_region &lt;- owid_covid_data %&gt;% 
+  filter(continent!=&quot;NA&quot;) %&gt;% 
+  group_by(continent, date) %&gt;% 
+  summarise(total_cases_cotinent = sum(total_cases, na.rm = TRUE),
+            total_deaths_continent = sum(total_deaths, na.rm = TRUE))</code></pre>
+<p>total cases by continent</p>
+<pre class="r"><code>covid_region %&gt;% 
+  ggplot(aes(x = date, y = total_cases_cotinent, fill = continent)) +
+  geom_area() +
+  theme_bw()</code></pre>
+<p><img src="/projects/project2/index2_files/figure-html/unnamed-chunk-3-1.png" width="960" style="display: block; margin: auto;" /></p>
+</div>
+</div>
+
+                        </div>
+                    </section>
+            <!-- Disqus Inject -->
+                
+            </div>
+            
+        <!-- Footer -->
+            
+                <!-- Footer -->
+    <footer id="footer">
+        <div class="inner">
+            <ul class="icons">
+                
+                    <li><a href="" class="icon alt " target="_blank"><span class="label"></span></a></li>
+                
+                    <li><a href="https://www.facebook.com/profile.php?id=100024719945385" class="icon alt fa-facebook" target="_blank"><span class="label">Facebook</span></a></li>
+                
+                    <li><a href="https://www.instagram.com/l.lcrow/" class="icon alt fa-instagram" target="_blank"><span class="label">Instagram</span></a></li>
+                
+                    <li><a href="https://github.com/Shengwei-Lai" class="icon alt fa-github" target="_blank"><span class="label">GitHub</span></a></li>
+                
+                    <li><a href="https://www.linkedin.com/in/shengwei-lai-b70a27169/" class="icon alt fa-linkedin" target="_blank"><span class="label">LinkedIn</span></a></li>
+                
+            </ul>
+            <ul class="copyright">
+                <li>&copy; Shengwei Lai</li>
+                
+                <li> <a href=""></a></li>
+                
+            </ul>
+        </div>
+    </footer>
+
+            
+        </div>
+
+    <!-- Scripts -->
+        <!-- Scripts -->
+    <!-- jQuery -->
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/jquery.scrolly.min.js"></script>
+    <script src="/js/jquery.scrollex.min.js"></script>
+    <script src="/js/skel.min.js"></script>
+    <script src="/js/util.js"></script>
+
+    
+
+    <!-- Main JS -->
+    <script src="/js/main.js"></script>
+
+    
+
+    
+
+    </body>
+</html>

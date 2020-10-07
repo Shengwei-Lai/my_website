@@ -1,0 +1,390 @@
+<!DOCTYPE HTML>
+<html>
+
+    <head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+	<meta name="description" content="MFA2021">
+	<meta name="author" content="Shengwei Lai">
+	<meta name="generator" content="Hugo 0.75.1" />
+	<title>Gas price &middot; Portfolio website for Shengwei Lai</title>
+	<!-- Stylesheets -->
+	
+	<link rel="stylesheet" href="/css/main.css"/>
+	
+	
+
+	
+
+	<!-- Custom Fonts -->
+	<link href="/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+	
+	<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+	<link rel="icon" type="image/x-icon" href="/favicon.ico">
+	
+
+	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+	<!--[if lt IE 9]>
+	<script src="js/ie/html5shiv.js"></script>
+	<script src="js/ie/html5shiv.jsrespond.min.js"></script>
+	<![endif]-->
+</head>
+
+    <body>
+
+    <!-- Wrapper -->
+        <div id="wrapper">
+
+            <!-- Header -->
+    <header id="header" class="alt">
+        <a href="/" class="logo"><strong>Shengwei Lai</strong> <span>MFA2021</span></a>
+        <nav>
+            <a href="#menu">Menu</a>
+        </nav>
+    </header>
+
+<!-- Menu -->
+    <nav id="menu">
+        <ul class="links">
+            
+                <li><a href="/">Home</a></li>
+            
+                <li><a href="/blogs">Blogs</a></li>
+            
+                <li><a href="/blogs/ipsum">Generic Blog</a></li>
+            
+                <li><a href="/elements.html">Elements</a></li>
+            
+
+        </ul>
+        <ul class="actions vertical">
+            
+                <li><a href="/blogs" class="button special fit">Get Started</a></li>
+            
+            
+                <li><a href="/" class="button fit">Log In</a></li>
+            
+        </ul>
+    </nav>
+
+        <!-- Main -->
+            <div id="main" class="alt">
+
+                
+                    <section id="one">
+                        <div class="inner">
+                            <header class="major">
+                                <h1>Gas price</h1>
+                            </header>
+                            
+                                <span class="image main"><img src="/img/projects/pic10.jpg" alt="" /></span>
+                            
+                            
+
+
+<div id="gas-price-in-europe" class="section level1">
+<h1>gas price in Europe</h1>
+<div id="get-data" class="section level2">
+<h2>get data</h2>
+<p>download data from <a href="https://ec.europa.eu/eurostat/databrowser/view/nrg_pc_202/default/table?lang=en">Eurostat</a></p>
+<pre class="r"><code>gas_price &lt;- get_eurostat(id=&quot;nrg_pc_202&quot;)
+glimpse(gas_price)</code></pre>
+<pre><code>## Rows: 42,160
+## Columns: 8
+## $ product  &lt;chr&gt; &quot;4100&quot;, &quot;4100&quot;, &quot;4100&quot;, &quot;4100&quot;, &quot;4100&quot;, &quot;4100&quot;, &quot;4100&quot;, &quot;4...
+## $ consom   &lt;chr&gt; &quot;4141901&quot;, &quot;4141901&quot;, &quot;4141901&quot;, &quot;4141901&quot;, &quot;4141901&quot;, &quot;41...
+## $ unit     &lt;chr&gt; &quot;GJ_GCV&quot;, &quot;GJ_GCV&quot;, &quot;GJ_GCV&quot;, &quot;GJ_GCV&quot;, &quot;GJ_GCV&quot;, &quot;GJ_GCV&quot;...
+## $ tax      &lt;chr&gt; &quot;I_TAX&quot;, &quot;I_TAX&quot;, &quot;I_TAX&quot;, &quot;I_TAX&quot;, &quot;I_TAX&quot;, &quot;I_TAX&quot;, &quot;I_T...
+## $ currency &lt;chr&gt; &quot;EUR&quot;, &quot;EUR&quot;, &quot;EUR&quot;, &quot;EUR&quot;, &quot;EUR&quot;, &quot;EUR&quot;, &quot;EUR&quot;, &quot;EUR&quot;, &quot;E...
+## $ geo      &lt;chr&gt; &quot;AT&quot;, &quot;BE&quot;, &quot;BG&quot;, &quot;CZ&quot;, &quot;DK&quot;, &quot;EE&quot;, &quot;ES&quot;, &quot;FR&quot;, &quot;GE&quot;, &quot;HR&quot;...
+## $ time     &lt;date&gt; 2020-01-01, 2020-01-01, 2020-01-01, 2020-01-01, 2020-01-0...
+## $ values   &lt;dbl&gt; 27.16, 18.43, 11.37, 30.09, 27.81, 14.06, 25.80, 36.00, 3....</code></pre>
+<pre class="r"><code>skim(gas_price)</code></pre>
+<table>
+<caption><span id="tab:getdata">Table 1: </span>Data summary</caption>
+<tbody>
+<tr class="odd">
+<td align="left">Name</td>
+<td align="left">gas_price</td>
+</tr>
+<tr class="even">
+<td align="left">Number of rows</td>
+<td align="left">42160</td>
+</tr>
+<tr class="odd">
+<td align="left">Number of columns</td>
+<td align="left">8</td>
+</tr>
+<tr class="even">
+<td align="left">_______________________</td>
+<td align="left"></td>
+</tr>
+<tr class="odd">
+<td align="left">Column type frequency:</td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left">character</td>
+<td align="left">6</td>
+</tr>
+<tr class="odd">
+<td align="left">Date</td>
+<td align="left">1</td>
+</tr>
+<tr class="even">
+<td align="left">numeric</td>
+<td align="left">1</td>
+</tr>
+<tr class="odd">
+<td align="left">________________________</td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left">Group variables</td>
+<td align="left">None</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: character</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">skim_variable</th>
+<th align="right">n_missing</th>
+<th align="right">complete_rate</th>
+<th align="right">min</th>
+<th align="right">max</th>
+<th align="right">empty</th>
+<th align="right">n_unique</th>
+<th align="right">whitespace</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">product</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">4</td>
+<td align="right">4</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">consom</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">7</td>
+<td align="right">7</td>
+<td align="right">0</td>
+<td align="right">3</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">unit</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">3</td>
+<td align="right">6</td>
+<td align="right">0</td>
+<td align="right">2</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">tax</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">5</td>
+<td align="right">5</td>
+<td align="right">0</td>
+<td align="right">3</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">currency</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">3</td>
+<td align="right">3</td>
+<td align="right">0</td>
+<td align="right">3</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">geo</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">2</td>
+<td align="right">9</td>
+<td align="right">0</td>
+<td align="right">36</td>
+<td align="right">0</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: Date</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">skim_variable</th>
+<th align="right">n_missing</th>
+<th align="right">complete_rate</th>
+<th align="left">min</th>
+<th align="left">max</th>
+<th align="left">median</th>
+<th align="right">n_unique</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">time</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">2007-01-01</td>
+<td align="left">2020-01-01</td>
+<td align="left">2014-01-01</td>
+<td align="right">27</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: numeric</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">skim_variable</th>
+<th align="right">n_missing</th>
+<th align="right">complete_rate</th>
+<th align="right">mean</th>
+<th align="right">sd</th>
+<th align="right">p0</th>
+<th align="right">p25</th>
+<th align="right">p50</th>
+<th align="right">p75</th>
+<th align="right">p100</th>
+<th align="left">hist</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">values</td>
+<td align="right">162</td>
+<td align="right">1</td>
+<td align="right">35.8</td>
+<td align="right">240</td>
+<td align="right">0</td>
+<td align="right">0.06</td>
+<td align="right">6.04</td>
+<td align="right">16.5</td>
+<td align="right">5023</td>
+<td align="left">▇▁▁▁▁</td>
+</tr>
+</tbody>
+</table>
+<p>Filter data: unit of measure is Gigajoule (gross calorific value), exclude taxes and levies, use euro as currency</p>
+<pre class="r"><code>gas_price &lt;- gas_price %&gt;% 
+  filter(unit == &quot;GJ_GCV&quot;, #unit of measure = Gigajoule (gross calorific value -GCV)
+         tax == &quot;X_TAX&quot;, #excluding taxes and levies
+         currency == &quot;EUR&quot; #currency = euro
+         ) %&gt;% 
+  mutate(consom2 = ifelse(consom == &quot;4141901&quot;, &quot;consumption&lt;20GJ&quot;, 
+                          ifelse(consom == &quot;4141902&quot;, &quot;20GJ&lt;consumption&lt;200GJ&quot;,
+                                 &quot;consumption&gt;20GJ&quot;)))
+
+gas_price$consom2 &lt;- factor(gas_price$consom2, 
+                    ordered = TRUE)</code></pre>
+</div>
+<div id="price-by-consumption-volume" class="section level2">
+<h2>price by consumption volume</h2>
+<p>Gas price is lower when consumption volume is larger</p>
+<pre class="r"><code>gas_price %&gt;% 
+  group_by(consom2, time) %&gt;% 
+  summarise(mean_price = mean(values, na.rm = TRUE)) %&gt;% #average gas price
+  ggplot(aes(x = time, y = mean_price, color = consom2)) +
+  geom_line() +
+  labs(title = &quot;gas price by consumption volume&quot;,
+       x = &quot;&quot;,
+       y = &quot;gas price (euro/gigajoule)&quot;,
+       caption = &quot;Source: Eurostat&quot;) +
+  theme_bw() +
+  NULL          </code></pre>
+<p><img src="/projects/project3/index3_files/figure-html/consom-1.png" width="960" style="display: block; margin: auto;" /></p>
+</div>
+<div id="price-by-region" class="section level2">
+<h2>price by region</h2>
+<p>Liechtenstein has the highest gas price, Georgia has the lowest gas price</p>
+<pre class="r"><code>gas_price %&gt;% 
+  filter(consom == &quot;4141901&quot;) %&gt;% # consumption&lt;20GJ
+  group_by(geo) %&gt;% 
+  mutate(median_price = median(values)) %&gt;% 
+  ggplot(aes(x = values, y = reorder(geo, median_price), color = geo)) +
+  geom_boxplot() +
+  labs(title = &quot;gas price by country&quot;,
+       x = &quot;gas price (euro/gigajoule)&quot;,
+       y = &quot;&quot;,
+       caption = &quot;Source: Eurostat&quot;) +
+  theme_bw() +
+  theme(legend.position = &quot;none&quot;) +
+  NULL          </code></pre>
+<p><img src="/projects/project3/index3_files/figure-html/country-1.png" width="960" style="display: block; margin: auto;" /></p>
+</div>
+</div>
+
+                        </div>
+                    </section>
+            <!-- Disqus Inject -->
+                
+            </div>
+            
+        <!-- Footer -->
+            
+                <!-- Footer -->
+    <footer id="footer">
+        <div class="inner">
+            <ul class="icons">
+                
+                    <li><a href="" class="icon alt " target="_blank"><span class="label"></span></a></li>
+                
+                    <li><a href="https://www.facebook.com/profile.php?id=100024719945385" class="icon alt fa-facebook" target="_blank"><span class="label">Facebook</span></a></li>
+                
+                    <li><a href="https://www.instagram.com/l.lcrow/" class="icon alt fa-instagram" target="_blank"><span class="label">Instagram</span></a></li>
+                
+                    <li><a href="https://github.com/Shengwei-Lai" class="icon alt fa-github" target="_blank"><span class="label">GitHub</span></a></li>
+                
+                    <li><a href="https://www.linkedin.com/in/shengwei-lai-b70a27169/" class="icon alt fa-linkedin" target="_blank"><span class="label">LinkedIn</span></a></li>
+                
+            </ul>
+            <ul class="copyright">
+                <li>&copy; Shengwei Lai</li>
+                
+                <li> <a href=""></a></li>
+                
+            </ul>
+        </div>
+    </footer>
+
+            
+        </div>
+
+    <!-- Scripts -->
+        <!-- Scripts -->
+    <!-- jQuery -->
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/jquery.scrolly.min.js"></script>
+    <script src="/js/jquery.scrollex.min.js"></script>
+    <script src="/js/skel.min.js"></script>
+    <script src="/js/util.js"></script>
+
+    
+
+    <!-- Main JS -->
+    <script src="/js/main.js"></script>
+
+    
+
+    
+
+    </body>
+</html>
