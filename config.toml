@@ -174,11 +174,11 @@ disqusShortname = ""
     title = "Email"
     email = "slai.mfa2021@london.edu"
 
-    [[params.contact.phone]]
+#    [[params.contact.phone]]
 #    title = "Phone"
 #    phone = "(000) 000-0000 x1234"
 
-    [[params.contact.address]]
+#    [[params.contact.address]]
 #    title = "Address"
 #    street = "Street"
 #    city = "City, ST 00000"
