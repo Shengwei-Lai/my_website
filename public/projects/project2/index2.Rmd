@@ -1,11 +1,11 @@
 ---
-title: "Covid 19"
-date: '2020-10-05'
+title: "Euro yield curve"
+date: '2020-10-07'
 description: ''
 draft: no
 image: pic10.jpg
 keywords: ''
-slug: covid
+slug: yield
 categories:
 - ''
 - ''
@@ -39,28 +39,17 @@ library(httr)
 library(readxl)
 library(vroom)
 library(tidyquant)
+library(eurostat)
+library(fpp2) # for time series decomposition
+library(seasonal)
+library(tmap) #mapping eurostat data
 ```
 
-# Covid 19 data
+# Euro yield curves
 ## get data
-```{r cache=TRUE}
-owid_covid_data <- read_csv(here::here('content/projects/project2', 'owid-covid-data.csv')) 
-```
-
-## total cases and deaths by continent
-create a new data set by continent and date
-```{r}
-covid_region <- owid_covid_data %>% 
-  filter(continent!="NA") %>% 
-  group_by(continent, date) %>% 
-  summarise(total_cases_cotinent = sum(total_cases, na.rm = TRUE),
-            total_deaths_continent = sum(total_deaths, na.rm = TRUE))
-```
-
-total cases by continent
-```{r, fig.height=5, fig.width=10}
-covid_region %>% 
-  ggplot(aes(x = date, y = total_cases_cotinent, fill = continent)) +
-  geom_area() +
-  theme_bw()
+download data from [Eurostat](https://ec.europa.eu/eurostat/databrowser/view/irt_euryld_m/default/table?lang=en)
+```{r getdata}
+yield_curve <- get_eurostat(id="irt_euryld_m")
+glimpse(yield_curve)
+skim(yield_curve)
 ```

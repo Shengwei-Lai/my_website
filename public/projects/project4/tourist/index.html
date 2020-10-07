@@ -1,0 +1,322 @@
+<!DOCTYPE HTML>
+<html>
+
+    <head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+	<meta name="description" content="MFA2021">
+	<meta name="author" content="Shengwei Lai">
+	<meta name="generator" content="Hugo 0.75.1" />
+	<title>Arrivals at tourist accommodation establishments &middot; Portfolio website for Shengwei Lai</title>
+	<!-- Stylesheets -->
+	
+	<link rel="stylesheet" href="/css/main.css"/>
+	
+	
+
+	
+
+	<!-- Custom Fonts -->
+	<link href="/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+	
+	<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+	<link rel="icon" type="image/x-icon" href="/favicon.ico">
+	
+
+	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+	<!--[if lt IE 9]>
+	<script src="js/ie/html5shiv.js"></script>
+	<script src="js/ie/html5shiv.jsrespond.min.js"></script>
+	<![endif]-->
+</head>
+
+    <body>
+
+    <!-- Wrapper -->
+        <div id="wrapper">
+
+            <!-- Header -->
+    <header id="header" class="alt">
+        <a href="/" class="logo"><strong>Shengwei Lai</strong> <span>MFA2021</span></a>
+        <nav>
+            <a href="#menu">Menu</a>
+        </nav>
+    </header>
+
+<!-- Menu -->
+    <nav id="menu">
+        <ul class="links">
+            
+                <li><a href="/">Home</a></li>
+            
+                <li><a href="/blogs">Blogs</a></li>
+            
+                <li><a href="/blogs/ipsum">Generic Blog</a></li>
+            
+                <li><a href="/elements.html">Elements</a></li>
+            
+
+        </ul>
+        <ul class="actions vertical">
+            
+                <li><a href="/blogs" class="button special fit">Get Started</a></li>
+            
+            
+                <li><a href="/" class="button fit">Log In</a></li>
+            
+        </ul>
+    </nav>
+
+        <!-- Main -->
+            <div id="main" class="alt">
+
+                
+                    <section id="one">
+                        <div class="inner">
+                            <header class="major">
+                                <h1>Arrivals at tourist accommodation establishments</h1>
+                            </header>
+                            
+                                <span class="image main"><img src="/img/projects/pic10.jpg" alt="" /></span>
+                            
+                            
+
+
+<div id="euro-yield-curves" class="section level1">
+<h1>Euro yield curves</h1>
+<div id="get-data" class="section level2">
+<h2>get data</h2>
+<p>download data from <a href="https://ec.europa.eu/eurostat/databrowser/view/tour_occ_arm/default/table?lang=en">Eurostat</a></p>
+<pre class="r"><code>tour_occ_arm &lt;- get_eurostat(id=&quot;tour_occ_arm&quot;)
+glimpse(tour_occ_arm)</code></pre>
+<pre><code>## Rows: 216,654
+## Columns: 6
+## $ c_resid &lt;chr&gt; &quot;FOR&quot;, &quot;FOR&quot;, &quot;FOR&quot;, &quot;FOR&quot;, &quot;FOR&quot;, &quot;FOR&quot;, &quot;FOR&quot;, &quot;FOR&quot;, &quot;FO...
+## $ unit    &lt;chr&gt; &quot;NR&quot;, &quot;NR&quot;, &quot;NR&quot;, &quot;NR&quot;, &quot;NR&quot;, &quot;NR&quot;, &quot;NR&quot;, &quot;NR&quot;, &quot;NR&quot;, &quot;NR&quot;,...
+## $ nace_r2 &lt;chr&gt; &quot;I551&quot;, &quot;I551&quot;, &quot;I551&quot;, &quot;I551&quot;, &quot;I551&quot;, &quot;I551&quot;, &quot;I551&quot;, &quot;I5...
+## $ geo     &lt;chr&gt; &quot;BG&quot;, &quot;CH&quot;, &quot;ES&quot;, &quot;FI&quot;, &quot;HR&quot;, &quot;HU&quot;, &quot;IS&quot;, &quot;LI&quot;, &quot;LV&quot;, &quot;NL&quot;,...
+## $ time    &lt;date&gt; 2020-07-01, 2020-07-01, 2020-07-01, 2020-07-01, 2020-07-01...
+## $ values  &lt;dbl&gt; 181685, 348727, 1112680, 41523, 332979, 126349, 80482, 7690...</code></pre>
+<pre class="r"><code>skim(tour_occ_arm)</code></pre>
+<table>
+<caption><span id="tab:getdata">Table 1: </span>Data summary</caption>
+<tbody>
+<tr class="odd">
+<td align="left">Name</td>
+<td align="left">tour_occ_arm</td>
+</tr>
+<tr class="even">
+<td align="left">Number of rows</td>
+<td align="left">216654</td>
+</tr>
+<tr class="odd">
+<td align="left">Number of columns</td>
+<td align="left">6</td>
+</tr>
+<tr class="even">
+<td align="left">_______________________</td>
+<td align="left"></td>
+</tr>
+<tr class="odd">
+<td align="left">Column type frequency:</td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left">character</td>
+<td align="left">4</td>
+</tr>
+<tr class="odd">
+<td align="left">Date</td>
+<td align="left">1</td>
+</tr>
+<tr class="even">
+<td align="left">numeric</td>
+<td align="left">1</td>
+</tr>
+<tr class="odd">
+<td align="left">________________________</td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left">Group variables</td>
+<td align="left">None</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: character</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">skim_variable</th>
+<th align="right">n_missing</th>
+<th align="right">complete_rate</th>
+<th align="right">min</th>
+<th align="right">max</th>
+<th align="right">empty</th>
+<th align="right">n_unique</th>
+<th align="right">whitespace</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">c_resid</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">3</td>
+<td align="right">5</td>
+<td align="right">0</td>
+<td align="right">3</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">unit</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">2</td>
+<td align="right">6</td>
+<td align="right">0</td>
+<td align="right">2</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">nace_r2</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">4</td>
+<td align="right">9</td>
+<td align="right">0</td>
+<td align="right">5</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">geo</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">2</td>
+<td align="right">9</td>
+<td align="right">0</td>
+<td align="right">42</td>
+<td align="right">0</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: Date</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">skim_variable</th>
+<th align="right">n_missing</th>
+<th align="right">complete_rate</th>
+<th align="left">min</th>
+<th align="left">max</th>
+<th align="left">median</th>
+<th align="right">n_unique</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">time</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">1990-01-01</td>
+<td align="left">2020-07-01</td>
+<td align="left">2012-05-01</td>
+<td align="right">367</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: numeric</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">skim_variable</th>
+<th align="right">n_missing</th>
+<th align="right">complete_rate</th>
+<th align="right">mean</th>
+<th align="right">sd</th>
+<th align="right">p0</th>
+<th align="right">p25</th>
+<th align="right">p50</th>
+<th align="right">p75</th>
+<th align="right">p100</th>
+<th align="left">hist</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">values</td>
+<td align="right">3153</td>
+<td align="right">0.99</td>
+<td align="right">1273627</td>
+<td align="right">6292365</td>
+<td align="right">-100</td>
+<td align="right">4</td>
+<td align="right">264</td>
+<td align="right">239309</td>
+<td align="right">1.46e+08</td>
+<td align="left">▇▁▁▁▁</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+                        </div>
+                    </section>
+            <!-- Disqus Inject -->
+                
+            </div>
+            
+        <!-- Footer -->
+            
+                <!-- Footer -->
+    <footer id="footer">
+        <div class="inner">
+            <ul class="icons">
+                
+                    <li><a href="" class="icon alt " target="_blank"><span class="label"></span></a></li>
+                
+                    <li><a href="https://www.facebook.com/profile.php?id=100024719945385" class="icon alt fa-facebook" target="_blank"><span class="label">Facebook</span></a></li>
+                
+                    <li><a href="https://www.instagram.com/l.lcrow/" class="icon alt fa-instagram" target="_blank"><span class="label">Instagram</span></a></li>
+                
+                    <li><a href="https://github.com/Shengwei-Lai" class="icon alt fa-github" target="_blank"><span class="label">GitHub</span></a></li>
+                
+                    <li><a href="https://www.linkedin.com/in/shengwei-lai-b70a27169/" class="icon alt fa-linkedin" target="_blank"><span class="label">LinkedIn</span></a></li>
+                
+            </ul>
+            <ul class="copyright">
+                <li>&copy; Shengwei Lai</li>
+                
+                <li> <a href=""></a></li>
+                
+            </ul>
+        </div>
+    </footer>
+
+            
+        </div>
+
+    <!-- Scripts -->
+        <!-- Scripts -->
+    <!-- jQuery -->
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/jquery.scrolly.min.js"></script>
+    <script src="/js/jquery.scrollex.min.js"></script>
+    <script src="/js/skel.min.js"></script>
+    <script src="/js/util.js"></script>
+
+    
+
+    <!-- Main JS -->
+    <script src="/js/main.js"></script>
+
+    
+
+    
+
+    </body>
+</html>

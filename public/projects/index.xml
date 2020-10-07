@@ -8,6 +8,26 @@
     <language>en-us</language>
     <lastBuildDate>Wed, 07 Oct 2020 00:00:00 +0000</lastBuildDate><atom:link href="/projects/index.xml" rel="self" type="application/rss+xml" />
     <item>
+      <title>Arrivals at tourist accommodation establishments</title>
+      <link>/projects/project4/tourist/</link>
+      <pubDate>Wed, 07 Oct 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/projects/project4/tourist/</guid>
+      <description>Euro yield curvesget datadownload data from Eurostat
+tour_occ_arm &amp;lt;- get_eurostat(id=&amp;quot;tour_occ_arm&amp;quot;)glimpse(tour_occ_arm)## Rows: 216,654## Columns: 6## $ c_resid &amp;lt;chr&amp;gt; &amp;quot;FOR&amp;quot;, &amp;quot;FOR&amp;quot;, &amp;quot;FOR&amp;quot;, &amp;quot;FOR&amp;quot;, &amp;quot;FOR&amp;quot;, &amp;quot;FOR&amp;quot;, &amp;quot;FOR&amp;quot;, &amp;quot;FOR&amp;quot;, &amp;quot;FO...## $ unit &amp;lt;chr&amp;gt; &amp;quot;NR&amp;quot;, &amp;quot;NR&amp;quot;, &amp;quot;NR&amp;quot;, &amp;quot;NR&amp;quot;, &amp;quot;NR&amp;quot;, &amp;quot;NR&amp;quot;, &amp;quot;NR&amp;quot;, &amp;quot;NR&amp;quot;, &amp;quot;NR&amp;quot;, &amp;quot;NR&amp;quot;,...## $ nace_r2 &amp;lt;chr&amp;gt; &amp;quot;I551&amp;quot;, &amp;quot;I551&amp;quot;, &amp;quot;I551&amp;quot;, &amp;quot;I551&amp;quot;, &amp;quot;I551&amp;quot;, &amp;quot;I551&amp;quot;, &amp;quot;I551&amp;quot;, &amp;quot;I5...## $ geo &amp;lt;chr&amp;gt; &amp;quot;BG&amp;quot;, &amp;quot;CH&amp;quot;, &amp;quot;ES&amp;quot;, &amp;quot;FI&amp;quot;, &amp;quot;HR&amp;quot;, &amp;quot;HU&amp;quot;, &amp;quot;IS&amp;quot;, &amp;quot;LI&amp;quot;, &amp;quot;LV&amp;quot;, &amp;quot;NL&amp;quot;,.</description>
+    </item>
+    
+    <item>
+      <title>Euro yield curve</title>
+      <link>/projects/project2/yield/</link>
+      <pubDate>Wed, 07 Oct 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/projects/project2/yield/</guid>
+      <description>Euro yield curvesget datadownload data from Eurostat
+yield_curve &amp;lt;- get_eurostat(id=&amp;quot;irt_euryld_m&amp;quot;)glimpse(yield_curve)## Rows: 34,740## Columns: 6## $ yld_curv &amp;lt;chr&amp;gt; &amp;quot;INS_FWD&amp;quot;, &amp;quot;INS_FWD&amp;quot;, &amp;quot;INS_FWD&amp;quot;, &amp;quot;INS_FWD&amp;quot;, &amp;quot;INS_FWD&amp;quot;, &amp;quot;IN...## $ bonds &amp;lt;chr&amp;gt; &amp;quot;CGB_EA&amp;quot;, &amp;quot;CGB_EA&amp;quot;, &amp;quot;CGB_EA&amp;quot;, &amp;quot;CGB_EA&amp;quot;, &amp;quot;CGB_EA&amp;quot;, &amp;quot;CGB_EA&amp;quot;...## $ maturity &amp;lt;chr&amp;gt; &amp;quot;Y1&amp;quot;, &amp;quot;Y10&amp;quot;, &amp;quot;Y11&amp;quot;, &amp;quot;Y12&amp;quot;, &amp;quot;Y13&amp;quot;, &amp;quot;Y14&amp;quot;, &amp;quot;Y15&amp;quot;, &amp;quot;Y16&amp;quot;, &amp;quot;Y1...## $ geo &amp;lt;chr&amp;gt; &amp;quot;EA&amp;quot;, &amp;quot;EA&amp;quot;, &amp;quot;EA&amp;quot;, &amp;quot;EA&amp;quot;, &amp;quot;EA&amp;quot;, &amp;quot;EA&amp;quot;, &amp;quot;EA&amp;quot;, &amp;quot;EA&amp;quot;, &amp;quot;EA&amp;quot;, &amp;quot;EA&amp;quot;...## $ time &amp;lt;date&amp;gt; 2020-09-01, 2020-09-01, 2020-09-01, 2020-09-01, 2020-09-0.</description>
+    </item>
+    
+    <item>
       <title>Gas price</title>
       <link>/projects/project3/gas/</link>
       <pubDate>Wed, 07 Oct 2020 00:00:00 +0000</pubDate>
@@ -15,17 +35,6 @@
       <guid>/projects/project3/gas/</guid>
       <description>gas price in Europeget datadownload data from Eurostat
 gas_price &amp;lt;- get_eurostat(id=&amp;quot;nrg_pc_202&amp;quot;)glimpse(gas_price)## Rows: 42,160## Columns: 8## $ product &amp;lt;chr&amp;gt; &amp;quot;4100&amp;quot;, &amp;quot;4100&amp;quot;, &amp;quot;4100&amp;quot;, &amp;quot;4100&amp;quot;, &amp;quot;4100&amp;quot;, &amp;quot;4100&amp;quot;, &amp;quot;4100&amp;quot;, &amp;quot;4...## $ consom &amp;lt;chr&amp;gt; &amp;quot;4141901&amp;quot;, &amp;quot;4141901&amp;quot;, &amp;quot;4141901&amp;quot;, &amp;quot;4141901&amp;quot;, &amp;quot;4141901&amp;quot;, &amp;quot;41...## $ unit &amp;lt;chr&amp;gt; &amp;quot;GJ_GCV&amp;quot;, &amp;quot;GJ_GCV&amp;quot;, &amp;quot;GJ_GCV&amp;quot;, &amp;quot;GJ_GCV&amp;quot;, &amp;quot;GJ_GCV&amp;quot;, &amp;quot;GJ_GCV&amp;quot;...## $ tax &amp;lt;chr&amp;gt; &amp;quot;I_TAX&amp;quot;, &amp;quot;I_TAX&amp;quot;, &amp;quot;I_TAX&amp;quot;, &amp;quot;I_TAX&amp;quot;, &amp;quot;I_TAX&amp;quot;, &amp;quot;I_TAX&amp;quot;, &amp;quot;I_T...## $ currency &amp;lt;chr&amp;gt; &amp;quot;EUR&amp;quot;, &amp;quot;EUR&amp;quot;, &amp;quot;EUR&amp;quot;, &amp;quot;EUR&amp;quot;, &amp;quot;EUR&amp;quot;, &amp;quot;EUR&amp;quot;, &amp;quot;EUR&amp;quot;, &amp;quot;EUR&amp;quot;, &amp;quot;E.</description>
-    </item>
-    
-    <item>
-      <title>Covid 19</title>
-      <link>/projects/project2/covid/</link>
-      <pubDate>Mon, 05 Oct 2020 00:00:00 +0000</pubDate>
-      
-      <guid>/projects/project2/covid/</guid>
-      <description>Covid 19 dataget dataowid_covid_data &amp;lt;- read_csv(here::here(&amp;#39;content/projects/project2&amp;#39;, &amp;#39;owid-covid-data.csv&amp;#39;)) total cases and deaths by continentcreate a new data set by continent and date
-covid_region &amp;lt;- owid_covid_data %&amp;gt;% filter(continent!=&amp;quot;NA&amp;quot;) %&amp;gt;% group_by(continent, date) %&amp;gt;% summarise(total_cases_cotinent = sum(total_cases, na.rm = TRUE),total_deaths_continent = sum(total_deaths, na.rm = TRUE))total cases by continent
-covid_region %&amp;gt;% ggplot(aes(x = date, y = total_cases_cotinent, fill = continent)) +geom_area() +theme_bw()</description>
     </item>
     
     <item>

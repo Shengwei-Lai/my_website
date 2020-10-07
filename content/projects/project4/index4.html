@@ -1,11 +1,11 @@
 ---
-title: "Euro yield curve"
+title: "Arrivals at tourist accommodation establishments"
 date: '2020-10-07'
 description: ''
 draft: no
 image: pic10.jpg
 keywords: ''
-slug: yield
+slug: tourist
 categories:
 - ''
 - ''
@@ -17,28 +17,28 @@ categories:
 <h1>Euro yield curves</h1>
 <div id="get-data" class="section level2">
 <h2>get data</h2>
-<p>download data from <a href="https://ec.europa.eu/eurostat/databrowser/view/irt_euryld_m/default/table?lang=en">Eurostat</a></p>
-<pre class="r"><code>yield_curve &lt;- get_eurostat(id=&quot;irt_euryld_m&quot;)
-glimpse(yield_curve)</code></pre>
-<pre><code>## Rows: 34,740
+<p>download data from <a href="https://ec.europa.eu/eurostat/databrowser/view/tour_occ_arm/default/table?lang=en">Eurostat</a></p>
+<pre class="r"><code>tour_occ_arm &lt;- get_eurostat(id=&quot;tour_occ_arm&quot;)
+glimpse(tour_occ_arm)</code></pre>
+<pre><code>## Rows: 216,654
 ## Columns: 6
-## $ yld_curv &lt;chr&gt; &quot;INS_FWD&quot;, &quot;INS_FWD&quot;, &quot;INS_FWD&quot;, &quot;INS_FWD&quot;, &quot;INS_FWD&quot;, &quot;IN...
-## $ bonds    &lt;chr&gt; &quot;CGB_EA&quot;, &quot;CGB_EA&quot;, &quot;CGB_EA&quot;, &quot;CGB_EA&quot;, &quot;CGB_EA&quot;, &quot;CGB_EA&quot;...
-## $ maturity &lt;chr&gt; &quot;Y1&quot;, &quot;Y10&quot;, &quot;Y11&quot;, &quot;Y12&quot;, &quot;Y13&quot;, &quot;Y14&quot;, &quot;Y15&quot;, &quot;Y16&quot;, &quot;Y1...
-## $ geo      &lt;chr&gt; &quot;EA&quot;, &quot;EA&quot;, &quot;EA&quot;, &quot;EA&quot;, &quot;EA&quot;, &quot;EA&quot;, &quot;EA&quot;, &quot;EA&quot;, &quot;EA&quot;, &quot;EA&quot;...
-## $ time     &lt;date&gt; 2020-09-01, 2020-09-01, 2020-09-01, 2020-09-01, 2020-09-0...
-## $ values   &lt;dbl&gt; -0.51, 0.62, 0.74, 0.84, 0.93, 1.00, 1.07, 1.13, 1.18, 1.2...</code></pre>
-<pre class="r"><code>skim(yield_curve)</code></pre>
+## $ c_resid &lt;chr&gt; &quot;FOR&quot;, &quot;FOR&quot;, &quot;FOR&quot;, &quot;FOR&quot;, &quot;FOR&quot;, &quot;FOR&quot;, &quot;FOR&quot;, &quot;FOR&quot;, &quot;FO...
+## $ unit    &lt;chr&gt; &quot;NR&quot;, &quot;NR&quot;, &quot;NR&quot;, &quot;NR&quot;, &quot;NR&quot;, &quot;NR&quot;, &quot;NR&quot;, &quot;NR&quot;, &quot;NR&quot;, &quot;NR&quot;,...
+## $ nace_r2 &lt;chr&gt; &quot;I551&quot;, &quot;I551&quot;, &quot;I551&quot;, &quot;I551&quot;, &quot;I551&quot;, &quot;I551&quot;, &quot;I551&quot;, &quot;I5...
+## $ geo     &lt;chr&gt; &quot;BG&quot;, &quot;CH&quot;, &quot;ES&quot;, &quot;FI&quot;, &quot;HR&quot;, &quot;HU&quot;, &quot;IS&quot;, &quot;LI&quot;, &quot;LV&quot;, &quot;NL&quot;,...
+## $ time    &lt;date&gt; 2020-07-01, 2020-07-01, 2020-07-01, 2020-07-01, 2020-07-01...
+## $ values  &lt;dbl&gt; 181685, 348727, 1112680, 41523, 332979, 126349, 80482, 7690...</code></pre>
+<pre class="r"><code>skim(tour_occ_arm)</code></pre>
 <table>
 <caption><span id="tab:getdata">Table 1: </span>Data summary</caption>
 <tbody>
 <tr class="odd">
 <td align="left">Name</td>
-<td align="left">yield_curve</td>
+<td align="left">tour_occ_arm</td>
 </tr>
 <tr class="even">
 <td align="left">Number of rows</td>
-<td align="left">34740</td>
+<td align="left">216654</td>
 </tr>
 <tr class="odd">
 <td align="left">Number of columns</td>
@@ -90,33 +90,33 @@ glimpse(yield_curve)</code></pre>
 </thead>
 <tbody>
 <tr class="odd">
-<td align="left">yld_curv</td>
+<td align="left">c_resid</td>
 <td align="right">0</td>
 <td align="right">1</td>
 <td align="right">3</td>
-<td align="right">7</td>
+<td align="right">5</td>
 <td align="right">0</td>
 <td align="right">3</td>
 <td align="right">0</td>
 </tr>
 <tr class="even">
-<td align="left">bonds</td>
+<td align="left">unit</td>
 <td align="right">0</td>
 <td align="right">1</td>
+<td align="right">2</td>
 <td align="right">6</td>
-<td align="right">10</td>
 <td align="right">0</td>
 <td align="right">2</td>
 <td align="right">0</td>
 </tr>
 <tr class="odd">
-<td align="left">maturity</td>
+<td align="left">nace_r2</td>
 <td align="right">0</td>
 <td align="right">1</td>
-<td align="right">2</td>
-<td align="right">3</td>
+<td align="right">4</td>
+<td align="right">9</td>
 <td align="right">0</td>
-<td align="right">30</td>
+<td align="right">5</td>
 <td align="right">0</td>
 </tr>
 <tr class="even">
@@ -124,9 +124,9 @@ glimpse(yield_curve)</code></pre>
 <td align="right">0</td>
 <td align="right">1</td>
 <td align="right">2</td>
-<td align="right">2</td>
+<td align="right">9</td>
 <td align="right">0</td>
-<td align="right">1</td>
+<td align="right">42</td>
 <td align="right">0</td>
 </tr>
 </tbody>
@@ -149,10 +149,10 @@ glimpse(yield_curve)</code></pre>
 <td align="left">time</td>
 <td align="right">0</td>
 <td align="right">1</td>
-<td align="left">2004-09-01</td>
-<td align="left">2020-09-01</td>
-<td align="left">2012-09-01</td>
-<td align="right">193</td>
+<td align="left">1990-01-01</td>
+<td align="left">2020-07-01</td>
+<td align="left">2012-05-01</td>
+<td align="right">367</td>
 </tr>
 </tbody>
 </table>
@@ -176,16 +176,16 @@ glimpse(yield_curve)</code></pre>
 <tbody>
 <tr class="odd">
 <td align="left">values</td>
-<td align="right">0</td>
-<td align="right">1</td>
-<td align="right">2.68</td>
-<td align="right">1.67</td>
-<td align="right">-0.96</td>
-<td align="right">1.24</td>
-<td align="right">2.9</td>
-<td align="right">4.14</td>
-<td align="right">6.08</td>
-<td align="left">▃▅▅▇▂</td>
+<td align="right">3153</td>
+<td align="right">0.99</td>
+<td align="right">1273627</td>
+<td align="right">6292365</td>
+<td align="right">-100</td>
+<td align="right">4</td>
+<td align="right">264</td>
+<td align="right">239309</td>
+<td align="right">1.46e+08</td>
+<td align="left">▇▁▁▁▁</td>
 </tr>
 </tbody>
 </table>

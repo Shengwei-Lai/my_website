@@ -1,11 +1,11 @@
 ---
-title: "Euro yield curve"
+title: "Arrivals at tourist accommodation establishments"
 date: '2020-10-07'
 description: ''
 draft: no
 image: pic10.jpg
 keywords: ''
-slug: yield
+slug: tourist
 categories:
 - ''
 - ''
@@ -47,9 +47,9 @@ library(tmap) #mapping eurostat data
 
 # Euro yield curves
 ## get data
-download data from [Eurostat](https://ec.europa.eu/eurostat/databrowser/view/irt_euryld_m/default/table?lang=en)
+download data from [Eurostat](https://ec.europa.eu/eurostat/databrowser/view/tour_occ_arm/default/table?lang=en)
 ```{r getdata}
-yield_curve <- get_eurostat(id="irt_euryld_m")
-glimpse(yield_curve)
-skim(yield_curve)
+tour_occ_arm <- get_eurostat(id="tour_occ_arm")
+glimpse(tour_occ_arm)
+skim(tour_occ_arm)
 ```

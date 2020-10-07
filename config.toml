@@ -98,22 +98,22 @@ disqusShortname = ""
       url = "projects/project1/stocks"
 
     [[params.tiles.showcase]]
+      title = "European yield curve"
+      subtitle = "European yield curve from 2004 to 2020"
+      image = "pic02.jpg"
+      url = "projects/project2/yield"
+
+    [[params.tiles.showcase]]
       title = "Gas price"
       subtitle = "gas price in Europe from 2007 to 2019"
-      image = "pic02.jpg"
+      image = "pic03.jpg"
       url = "projects/project3/gas"
 
     [[params.tiles.showcase]]
-      title = "Magna"
-      subtitle = "Lorem Etiam Nullam"
-      image = "pic03.jpg"
-      url = "blogs/magna"
-
-    [[params.tiles.showcase]]
-      title = "Ipsum"
-      subtitle = "Nisl Sed Aliquam"
+      title = "Tourist arrivals"
+      subtitle = "Arrivals at tourist accommodation establishments"
       image = "pic04.jpg"
-      url = "blogs/ipsum"
+      url = "projects/project4/tourist"
 
 #    [[params.tiles.showcase]]
 #      title = "Consequat"
@@ -121,7 +121,7 @@ disqusShortname = ""
 #      image = "pic05.jpg"
 #      url = "blogs/ipsum"
 
-    [[params.tiles.showcase]]
+#    [[params.tiles.showcase]]
 #      title = "Etiam"
 #      subtitle = "Feugiat Amet Tempus"
 #      image = "pic06.jpg"
