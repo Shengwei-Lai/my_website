@@ -85,8 +85,8 @@
                             
 
 
-<div id="euro-yield-curves" class="section level1">
-<h1>Euro yield curves</h1>
+<div id="tourism" class="section level1">
+<h1>Tourism</h1>
 <div id="get-data" class="section level2">
 <h2>get data</h2>
 <p>download data from <a href="https://ec.europa.eu/eurostat/databrowser/view/tour_occ_arm/default/table?lang=en">Eurostat</a></p>
@@ -261,6 +261,49 @@ glimpse(tour_occ_arm)</code></pre>
 </tr>
 </tbody>
 </table>
+<p>I want to look at total number of arrivals at tourist accommodation establishments in France, Germany, Spain and Italy since 2000</p>
+<pre class="r"><code>tourism &lt;- tour_occ_arm %&gt;% 
+  filter(c_resid == &quot;TOTAL&quot;, #country of residence == total
+         unit == &quot;NR&quot;, #unit of measure == number
+         nace_r2 == &quot;I551-I553&quot;, #Hotels; holiday and other short-stay accommodation; camping grounds, recreational vehicle parks and trailer parks
+         geo %in% c(&quot;FR&quot;, &quot;DE&quot;, &quot;ES&quot;, &quot;IT&quot;), #France, Germany, Spain, Italy
+         time &gt;= &quot;2000-01-01&quot;) %&gt;% 
+  mutate(values = values/1000000)</code></pre>
+</div>
+<div id="time-seris-plot" class="section level2">
+<h2>time seris plot</h2>
+<p>look at total number of arrivals at tourist accommodation in four countries</p>
+<pre class="r"><code>tourism %&gt;% 
+  ggplot(aes(x = time, y = values, color = geo)) +
+  geom_line() +
+  facet_wrap(~geo) +
+  theme_bw() +
+  labs(title = &quot;Arrivals at tourist accommodation establishments&quot;,
+       subtitle = &quot;in million&quot;,
+       x = &quot;&quot;,
+       y = &quot;millions of arrivals at tourist accommodation&quot;,
+       caption = &quot;Sources: Eurostat, code = tour_occ_arm&quot;) +
+  theme(legend.position = &quot;none&quot;)</code></pre>
+<p><img src="/projects/project4/index4_files/figure-html/plot-1.png" width="648" style="display: block; margin: auto;" /></p>
+</div>
+<div id="impact-of-covid-19-to-italy" class="section level2">
+<h2>impact of Covid-19 to Italy</h2>
+<pre class="r"><code>Italy_tourism &lt;- tourism %&gt;% 
+  filter(geo == &quot;IT&quot;) %&gt;% 
+  arrange(time) %&gt;%
+  #we just want to keep the values 
+  select(values) %&gt;% 
+  #time series (ts) starts Jan 2000 and has monthlyfrequency (12 months/yr)
+  ts(start=2000, frequency = 12) </code></pre>
+<pre class="r"><code>ggseasonplot(Italy_tourism, year.labels=TRUE, year.labels.left=TRUE) +
+  labs(
+    title = &quot;Seasonal plot: Arrivals at tourist accommodation in Italy&quot;,
+    subtitle = &quot;in millions&quot;,
+    y = &quot;Millions of Arrivals at tourist accommodation&quot;,
+    caption = &quot;Sources: Eurostat, code = tour_occ_arm&quot;
+  )+
+    theme_bw()</code></pre>
+<p><img src="/projects/project4/index4_files/figure-html/unnamed-chunk-1-1.png" width="648" style="display: block; margin: auto;" /></p>
 </div>
 </div>
 

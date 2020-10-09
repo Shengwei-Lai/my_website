@@ -45,7 +45,7 @@ library(seasonal)
 library(tmap) #mapping eurostat data
 ```
 
-# Euro yield curves
+# Tourism
 ## get data
 download data from [Eurostat](https://ec.europa.eu/eurostat/databrowser/view/tour_occ_arm/default/table?lang=en)
 ```{r getdata}
@@ -53,3 +53,56 @@ tour_occ_arm <- get_eurostat(id="tour_occ_arm")
 glimpse(tour_occ_arm)
 skim(tour_occ_arm)
 ```
+
+I want to look at total number of arrivals at tourist accommodation establishments in France, Germany, Spain and Italy since 2000
+```{r tourism}
+tourism <- tour_occ_arm %>% 
+  filter(c_resid == "TOTAL", #country of residence == total
+         unit == "NR", #unit of measure == number
+         nace_r2 == "I551-I553", #Hotels; holiday and other short-stay accommodation; camping grounds, recreational vehicle parks and trailer parks
+         geo %in% c("FR", "DE", "ES", "IT"), #France, Germany, Spain, Italy
+         time >= "2000-01-01") %>% 
+  mutate(values = values/1000000)
+```
+## time seris plot
+look at total number of arrivals at tourist accommodation in four countries
+```{r plot}
+tourism %>% 
+  ggplot(aes(x = time, y = values, color = geo)) +
+  geom_line() +
+  facet_wrap(~geo) +
+  theme_bw() +
+  labs(title = "Arrivals at tourist accommodation establishments",
+       subtitle = "in million",
+       x = "",
+       y = "millions of arrivals at tourist accommodation",
+       caption = "Sources: Eurostat, code = tour_occ_arm") +
+  theme(legend.position = "none")
+```
+
+## impact of Covid-19 to Italy
+```{r Italy_tourism}
+Italy_tourism <- tourism %>% 
+  filter(geo == "IT") %>% 
+  arrange(time) %>%
+  #we just want to keep the values 
+  select(values) %>% 
+  #time series (ts) starts Jan 2000 and has monthlyfrequency (12 months/yr)
+  ts(start=2000, frequency = 12) 
+```
+
+```{r}
+ggseasonplot(Italy_tourism, year.labels=TRUE, year.labels.left=TRUE) +
+  labs(
+    title = "Seasonal plot: Arrivals at tourist accommodation in Italy",
+    subtitle = "in millions",
+    y = "Millions of Arrivals at tourist accommodation",
+    caption = "Sources: Eurostat, code = tour_occ_arm"
+  )+
+    theme_bw()
+```
+
+
+
+
+
