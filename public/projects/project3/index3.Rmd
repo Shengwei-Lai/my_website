@@ -3,7 +3,7 @@ title: "Gas price"
 date: '2020-10-07'
 description: ''
 draft: no
-image: pic10.jpg
+image: gas.jpg
 keywords: ''
 slug: gas
 categories:
@@ -45,13 +45,11 @@ library(seasonal)
 library(tmap) #mapping eurostat data
 ```
 
-# gas price in Europe
 ## get data
 download data from [Eurostat](https://ec.europa.eu/eurostat/databrowser/view/nrg_pc_202/default/table?lang=en)
 ```{r getdata}
 gas_price <- get_eurostat(id="nrg_pc_202")
 glimpse(gas_price)
-skim(gas_price)
 ```
 
 Filter data: unit of measure is Gigajoule (gross calorific value), exclude taxes and levies, use euro as currency
@@ -61,26 +59,28 @@ gas_price <- gas_price %>%
          tax == "X_TAX", #excluding taxes and levies
          currency == "EUR" #currency = euro
          ) %>% 
-  mutate(consom2 = ifelse(consom == "4141901", "consumption<20GJ", 
+  mutate(consumption = ifelse(consom == "4141901", "consumption<20GJ", 
                           ifelse(consom == "4141902", "20GJ<consumption<200GJ",
-                                 "consumption>20GJ")))
+                                 "consumption>200GJ")))
 
-gas_price$consom2 <- factor(gas_price$consom2, 
-                    ordered = TRUE)
+gas_price$consumption <- factor(gas_price$consumption, 
+                    ordered = TRUE,
+                    levels = c("consumption<20GJ", "20GJ<consumption<200GJ",
+                               "consumption>200GJ"))
 ```
 
 ## price by consumption volume
 Gas price is lower when consumption volume is larger 
 ```{r consom, fig.height=5, fig.width=10}
 gas_price %>% 
-  group_by(consom2, time) %>% 
+  group_by(consumption, time) %>% 
   summarise(mean_price = mean(values, na.rm = TRUE)) %>% #average gas price
-  ggplot(aes(x = time, y = mean_price, color = consom2)) +
+  ggplot(aes(x = time, y = mean_price, color = consumption)) +
   geom_line() +
   labs(title = "gas price by consumption volume",
        x = "",
        y = "gas price (euro/gigajoule)",
-       caption = "Source: Eurostat") +
+       caption = "Source: Eurostat, code = nrg_pc_202") +
   theme_bw() +
   NULL          
 ```
@@ -97,8 +97,27 @@ gas_price %>%
   labs(title = "gas price by country",
        x = "gas price (euro/gigajoule)",
        y = "",
-       caption = "Source: Eurostat") +
+       caption = "Source: Eurostat, code = nrg_pc_202") +
   theme_bw() +
   theme(legend.position = "none") +
   NULL          
 ```
+
+## how gas price changes over time
+Average gas price increased to the highest level during 2013-2014, then decreased gradually
+```{r price, fig.height=5, fig.width=10}
+gas_price %>% 
+  group_by(time, consumption) %>% 
+  summarise(mean_price = mean(values)) %>% 
+  ggplot(aes(x = time, y = mean_price)) +
+  facet_wrap(~consumption) +
+  geom_line() +
+  geom_smooth() +
+  labs(title = "how gas price changes over time?",
+       subtitle = "by consumption",
+       x = "",
+       y = "average price (euro/gigajoule)",
+       caption = "Source: Eurostat, code = nrg_pc_202") +
+  theme_bw()
+```
+
