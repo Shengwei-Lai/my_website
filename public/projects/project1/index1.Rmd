@@ -3,7 +3,7 @@ title: "selected stocks in China A-share market"
 date: '2020-10-05'
 description: ''
 draft: no
-image: pic10.jpg
+image: stock.jpg
 keywords: ''
 slug: stocks
 categories:
@@ -39,24 +39,26 @@ library(httr)
 library(readxl)
 library(vroom)
 library(tidyquant)
+library(knitr)
+library(kableExtra)
 ```
 
-# myStocks
 ## get data
 get stock prices of 7 China A-share companies and Shanghai Stock Exchange (SSE) Composite Index using `tidyquant` package
 
 ``` {r myStocks}
-myStocks <- c("600519.SS", "000651.SZ", "601318.SS", "600276.SS", "600585.SS", "000002.SZ",
-              "600009.SS", "601398.SS", "002594.SZ", "000001.SS") %>% 
+myStocks <- c("600519.SS", "000651.SZ", "601318.SS", "600276.SS", "600585.SS", 
+              "000002.SZ","600009.SS", "601398.SS", "002594.SZ", "000001.SS") %>% 
   tq_get(get = "stock.prices", 
          from = "2015-01-01",
          to = "2020-09-30") %>%
   group_by(symbol)
 
-name <- data.frame(name = c("Moutai", "Gree", "PingAn", "Hengrui", "Conch Cement", "Vanke", 
-                            "Shanghai Airport", "ICBC", "BYD", "SSE Index"), 
-                   symbol = c("600519.SS", "000651.SZ", "601318.SS", "600276.SS", "600585.SS",
-                              "000002.SZ", "600009.SS", "601398.SS", "002594.SZ", "000001.SS"))
+name <- data.frame(name = c("Moutai", "Gree", "PingAn", "Hengrui", "Conch Cement", 
+                            "Vanke","Shanghai Airport", "ICBC", "BYD", "SSE_Index"), 
+                   symbol = c("600519.SS", "000651.SZ", "601318.SS", "600276.SS", 
+                              "600585.SS","000002.SZ", "600009.SS", "601398.SS", 
+                              "002594.SZ", "000001.SS"))
 
 name$name <- factor(name$name, 
                     levels = name$name,
@@ -85,7 +87,6 @@ myStocks %>%
 
 ## calculate financial returns
 Calculate daily and monthly returns
-
 ``` {r returns}
 #daily return
 myStocks_returns_daily <- myStocks %>%
@@ -109,7 +110,6 @@ myStocks_returns_monthly <- myStocks %>%
 ```
 
 plot monthly returns
-
 ``` {r, fig.height=5, fig.width=10}
 myStocks_returns_monthly %>% 
   group_by(name) %>% 
@@ -127,9 +127,32 @@ myStocks_returns_monthly %>%
   NULL
 ```
 
-## create a portfolio of assets
+## Sharpe ratio
+```{r Sharpe_ratio}
+myStocks_returns_monthly %>%
+  tq_performance(Ra = monthly.returns, 
+                 Rb = NULL, 
+                 performance_fun = SharpeRatio) %>% 
+  kable() %>%
+  kable_styling(c("striped", "bordered")) 
+```
 
-``` {r}
+## calculate the correlation
+We see BYD has lower correlation with other stocks and index. 
+```{r correlation, fig.height=10, fig.width=10}
+table_capm_returns <- myStocks_returns_monthly[-1] %>%
+            pivot_wider(names_from = "name",
+                        values_from = "monthly.returns")  
+
+table_capm_returns[-1] %>% #exclude "Date", the first column, from the correlation matrix
+  GGally::ggpairs() +
+  theme_bw()+
+    theme(axis.text.x = element_text(angle = 90, size=8),
+         axis.title.x = element_blank())
+```
+
+## risk return profile
+``` {r risk_return_profile}
 stocks_risk_return <- myStocks_returns_monthly %>% 
   tq_performance(Ra = monthly.returns, Rb = NULL, performance_fun = table.Stats) %>% 
   select(symbol,ArithmeticMean, GeometricMean, Minimum,Maximum,Stdev, Quartile1, Quartile3) %>% 
@@ -152,3 +175,11 @@ stocks_risk_return %>%
   theme(legend.position = "none", plot.margin = unit(c(0.2,0.2,0.2,0.2), "inches"))
 ```
 
+## CAPM
+I firstly want to investigate Moutai since it has largest median monthly return. I assume the risk-free rate is zero. 
+- beta is 0.90 and significant, which means when market decreases 1%, its price only decreases 0.90%
+- about 42.9% of Moutai return could be explained by the market, and 57.1% is related to its individual risk
+``` {r CAPM}
+CAPM <- lm(Moutai~SSE_Index, data = table_capm_returns)
+summary(CAPM)
+```

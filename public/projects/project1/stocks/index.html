@@ -80,27 +80,28 @@
                                 <h1>selected stocks in China A-share market</h1>
                             </header>
                             
-                                <span class="image main"><img src="/img/projects/pic10.jpg" alt="" /></span>
+                                <span class="image main"><img src="/img/projects/stock.jpg" alt="" /></span>
                             
                             
+<script src="/rmarkdown-libs/kePrint/kePrint.js"></script>
+<link href="/rmarkdown-libs/lightable/lightable.css" rel="stylesheet" />
 
 
-<div id="mystocks" class="section level1">
-<h1>myStocks</h1>
 <div id="get-data" class="section level2">
 <h2>get data</h2>
 <p>get stock prices of 7 China A-share companies and Shanghai Stock Exchange (SSE) Composite Index using <code>tidyquant</code> package</p>
-<pre class="r"><code>myStocks &lt;- c(&quot;600519.SS&quot;, &quot;000651.SZ&quot;, &quot;601318.SS&quot;, &quot;600276.SS&quot;, &quot;600585.SS&quot;, &quot;000002.SZ&quot;,
-              &quot;600009.SS&quot;, &quot;601398.SS&quot;, &quot;002594.SZ&quot;, &quot;000001.SS&quot;) %&gt;% 
+<pre class="r"><code>myStocks &lt;- c(&quot;600519.SS&quot;, &quot;000651.SZ&quot;, &quot;601318.SS&quot;, &quot;600276.SS&quot;, &quot;600585.SS&quot;, 
+              &quot;000002.SZ&quot;,&quot;600009.SS&quot;, &quot;601398.SS&quot;, &quot;002594.SZ&quot;, &quot;000001.SS&quot;) %&gt;% 
   tq_get(get = &quot;stock.prices&quot;, 
          from = &quot;2015-01-01&quot;,
          to = &quot;2020-09-30&quot;) %&gt;%
   group_by(symbol)
 
-name &lt;- data.frame(name = c(&quot;Moutai&quot;, &quot;Gree&quot;, &quot;PingAn&quot;, &quot;Hengrui&quot;, &quot;Conch Cement&quot;, &quot;Vanke&quot;, 
-                            &quot;Shanghai Airport&quot;, &quot;ICBC&quot;, &quot;BYD&quot;, &quot;SSE Index&quot;), 
-                   symbol = c(&quot;600519.SS&quot;, &quot;000651.SZ&quot;, &quot;601318.SS&quot;, &quot;600276.SS&quot;, &quot;600585.SS&quot;,
-                              &quot;000002.SZ&quot;, &quot;600009.SS&quot;, &quot;601398.SS&quot;, &quot;002594.SZ&quot;, &quot;000001.SS&quot;))
+name &lt;- data.frame(name = c(&quot;Moutai&quot;, &quot;Gree&quot;, &quot;PingAn&quot;, &quot;Hengrui&quot;, &quot;Conch Cement&quot;, 
+                            &quot;Vanke&quot;,&quot;Shanghai Airport&quot;, &quot;ICBC&quot;, &quot;BYD&quot;, &quot;SSE_Index&quot;), 
+                   symbol = c(&quot;600519.SS&quot;, &quot;000651.SZ&quot;, &quot;601318.SS&quot;, &quot;600276.SS&quot;, 
+                              &quot;600585.SS&quot;,&quot;000002.SZ&quot;, &quot;600009.SS&quot;, &quot;601398.SS&quot;, 
+                              &quot;002594.SZ&quot;, &quot;000001.SS&quot;))
 
 name$name &lt;- factor(name$name, 
                     levels = name$name,
@@ -164,8 +165,191 @@ myStocks_returns_monthly &lt;- myStocks %&gt;%
   NULL</code></pre>
 <p><img src="/projects/project1/index1_files/figure-html/unnamed-chunk-1-1.png" width="960" style="display: block; margin: auto;" /></p>
 </div>
-<div id="create-a-portfolio-of-assets" class="section level2">
-<h2>create a portfolio of assets</h2>
+<div id="sharpe-ratio" class="section level2">
+<h2>Sharpe ratio</h2>
+<pre class="r"><code>myStocks_returns_monthly %&gt;%
+  tq_performance(Ra = monthly.returns, 
+                 Rb = NULL, 
+                 performance_fun = SharpeRatio) %&gt;% 
+  kable() %&gt;%
+  kable_styling(c(&quot;striped&quot;, &quot;bordered&quot;)) </code></pre>
+<table class="table table-striped table-bordered" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+symbol
+</th>
+<th style="text-align:right;">
+ESSharpe(Rf=0%,p=95%)
+</th>
+<th style="text-align:right;">
+StdDevSharpe(Rf=0%,p=95%)
+</th>
+<th style="text-align:right;">
+VaRSharpe(Rf=0%,p=95%)
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+600519.SS
+</td>
+<td style="text-align:right;">
+0.224
+</td>
+<td style="text-align:right;">
+0.434
+</td>
+<td style="text-align:right;">
+0.349
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+000651.SZ
+</td>
+<td style="text-align:right;">
+0.131
+</td>
+<td style="text-align:right;">
+0.218
+</td>
+<td style="text-align:right;">
+0.168
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+601318.SS
+</td>
+<td style="text-align:right;">
+0.102
+</td>
+<td style="text-align:right;">
+0.195
+</td>
+<td style="text-align:right;">
+0.134
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+600276.SS
+</td>
+<td style="text-align:right;">
+0.242
+</td>
+<td style="text-align:right;">
+0.377
+</td>
+<td style="text-align:right;">
+0.318
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+600585.SS
+</td>
+<td style="text-align:right;">
+0.121
+</td>
+<td style="text-align:right;">
+0.224
+</td>
+<td style="text-align:right;">
+0.157
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+000002.SZ
+</td>
+<td style="text-align:right;">
+0.075
+</td>
+<td style="text-align:right;">
+0.155
+</td>
+<td style="text-align:right;">
+0.224
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+600009.SS
+</td>
+<td style="text-align:right;">
+0.166
+</td>
+<td style="text-align:right;">
+0.281
+</td>
+<td style="text-align:right;">
+0.211
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+601398.SS
+</td>
+<td style="text-align:right;">
+0.050
+</td>
+<td style="text-align:right;">
+0.092
+</td>
+<td style="text-align:right;">
+0.065
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+002594.SZ
+</td>
+<td style="text-align:right;">
+0.115
+</td>
+<td style="text-align:right;">
+0.175
+</td>
+<td style="text-align:right;">
+0.140
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+000001.SS
+</td>
+<td style="text-align:right;">
+0.009
+</td>
+<td style="text-align:right;">
+0.023
+</td>
+<td style="text-align:right;">
+0.014
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="calculate-the-correlation" class="section level2">
+<h2>calculate the correlation</h2>
+<p>We see BYD has lower correlation with other stocks and index.</p>
+<pre class="r"><code>table_capm_returns &lt;- myStocks_returns_monthly[-1] %&gt;%
+            pivot_wider(names_from = &quot;name&quot;,
+                        values_from = &quot;monthly.returns&quot;)  
+
+table_capm_returns[-1] %&gt;% #exclude &quot;Date&quot;, the first column, from the correlation matrix
+  GGally::ggpairs() +
+  theme_bw()+
+    theme(axis.text.x = element_text(angle = 90, size=8),
+         axis.title.x = element_blank())</code></pre>
+<p><img src="/projects/project1/index1_files/figure-html/correlation-1.png" width="960" style="display: block; margin: auto;" /></p>
+</div>
+<div id="risk-return-profile" class="section level2">
+<h2>risk return profile</h2>
 <pre class="r"><code>stocks_risk_return &lt;- myStocks_returns_monthly %&gt;% 
   tq_performance(Ra = monthly.returns, Rb = NULL, performance_fun = table.Stats) %&gt;% 
   select(symbol,ArithmeticMean, GeometricMean, Minimum,Maximum,Stdev, Quartile1, Quartile3) %&gt;% 
@@ -185,6 +369,31 @@ myStocks_returns_monthly &lt;- myStocks %&gt;%
   theme(legend.position = &quot;none&quot;, plot.margin = unit(c(0.2,0.2,0.2,0.2), &quot;inches&quot;))</code></pre>
 <p><img src="/projects/project1/index1_files/figure-html/stock_risk_return%20plot-1.png" width="960" style="display: block; margin: auto;" /></p>
 </div>
+<div id="capm" class="section level2">
+<h2>CAPM</h2>
+<p>I firstly want to investigate Moutai since it has largest median monthly return. I assume the risk-free rate is zero.
+- beta is 0.90 and significant, which means when market decreases 1%, its price only decreases 0.90%
+- about 42.9% of Moutai return could be explained by the market, and 57.1% is related to its individual risk</p>
+<pre class="r"><code>CAPM &lt;- lm(Moutai~SSE_Index, data = table_capm_returns)
+summary(CAPM)</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = Moutai ~ SSE_Index, data = table_capm_returns)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -0.21435 -0.03954  0.00515  0.04612  0.15235 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)  0.03603    0.00782    4.61  1.9e-05 ***
+## SSE_Index    0.90051    0.12467    7.22  6.0e-10 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 0.0649 on 67 degrees of freedom
+## Multiple R-squared:  0.438,  Adjusted R-squared:  0.429 
+## F-statistic: 52.2 on 1 and 67 DF,  p-value: 6.03e-10</code></pre>
 </div>
 
                         </div>
