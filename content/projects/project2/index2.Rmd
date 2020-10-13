@@ -3,7 +3,7 @@ title: "Euro yield curve"
 date: '2020-10-07'
 description: ''
 draft: no
-image: pic10.jpg
+image: euro.jpg
 keywords: ''
 slug: yield
 categories:
@@ -45,7 +45,6 @@ library(seasonal)
 library(tmap) #mapping eurostat data
 ```
 
-# Euro yield curves
 ## get data
 download data from [Eurostat](https://ec.europa.eu/eurostat/databrowser/view/irt_euryld_m/default/table?lang=en)
 ```{r getdata}
@@ -57,17 +56,34 @@ yield_curve$maturity <- factor(yield_curve$maturity,
                                           "Y20","Y21","Y22","Y23","Y24","Y25","Y26","Y27","Y28",
                                           "Y29","Y30")) #order maturity
 glimpse(yield_curve)
-skim(yield_curve)
 
 yield_curve <- yield_curve %>% 
   mutate(year = year(time),
          month = month(time))
 ```
 
+## How yield changes over time
+As we can see below, the spot rate of Euro government bonds decreases gradually. In 2008 financial crisis, the yield decreased a lot (especially for short-term bonds) to save the economy, and resumed since 2010. 
+Before 2012, the long-term bond yield was stable, but decreased greatly since then, mainly caused by Greece debt crisis. 
+```{r yield_change, fig.height=5, fig.width=10}
+yield_curve %>% 
+  filter(maturity %in% c("Y1", "Y5", "Y10", "Y30")) %>% 
+  filter(yld_curv == "SPOT_RT", #spot rate
+         bonds == "CGB_EA") %>% 
+  ggplot(aes(x = time, y = values)) +
+  geom_line() +
+  facet_wrap(~maturity) +
+  labs(title = "spot yield decreases gradually",
+       subtitle = "all euro area central government bonds",
+       caption = "Sources: Eurostat, code = irt_euryld_m",
+       x = "",
+       y = "spot rate (%)") +
+  theme_bw()
+```
 
-## slope
+## How yield slope changes over time
 During financial crisis and recessions, the yield difference of 30-year and 1-year government bonds tends to be smaller.
-```{r spotrate}
+```{r spotrate, fig.height=5, fig.width=10}
 yield_curve %>% 
   pivot_wider(names_from = "maturity",
               values_from = "values") %>% 
@@ -84,10 +100,11 @@ yield_curve %>%
   scale_y_continuous(breaks = c(0,1,2,3,4)) +
   theme_bw()
 ```
-## spread
-Yield spread of AAA-rated and all government bonds widened from 2010 to 2015, mainly caused by Greece debt crisis. In other times, investors believe there is little probability that governments default their bonds.
 
-```{r}
+## How spread changes over time
+Yield spread of AAA-rated and all government bonds widened from 2010 to 2015, mainly caused by Greece debt crisis. In other times, investors believe there is little probability that governments would default their bonds.
+
+```{r spread, fig.height=5, fig.width=10}
 yield_curve %>% 
   pivot_wider(names_from = "bonds",
               values_from = "values") %>% 

@@ -80,13 +80,11 @@
                                 <h1>Euro yield curve</h1>
                             </header>
                             
-                                <span class="image main"><img src="/img/projects/pic10.jpg" alt="" /></span>
+                                <span class="image main"><img src="/img/projects/euro.jpg" alt="" /></span>
                             
                             
 
 
-<div id="euro-yield-curves" class="section level1">
-<h1>Euro yield curves</h1>
 <div id="get-data" class="section level2">
 <h2>get data</h2>
 <p>download data from <a href="https://ec.europa.eu/eurostat/databrowser/view/irt_euryld_m/default/table?lang=en">Eurostat</a></p>
@@ -106,190 +104,31 @@ glimpse(yield_curve)</code></pre>
 ## $ geo      &lt;chr&gt; &quot;EA&quot;, &quot;EA&quot;, &quot;EA&quot;, &quot;EA&quot;, &quot;EA&quot;, &quot;EA&quot;, &quot;EA&quot;, &quot;EA&quot;, &quot;EA&quot;, &quot;EA&quot;...
 ## $ time     &lt;date&gt; 2020-09-01, 2020-09-01, 2020-09-01, 2020-09-01, 2020-09-0...
 ## $ values   &lt;dbl&gt; -0.51, 0.62, 0.74, 0.84, 0.93, 1.00, 1.07, 1.13, 1.18, 1.2...</code></pre>
-<pre class="r"><code>skim(yield_curve)</code></pre>
-<table>
-<caption><span id="tab:getdata">Table 1: </span>Data summary</caption>
-<tbody>
-<tr class="odd">
-<td align="left">Name</td>
-<td align="left">yield_curve</td>
-</tr>
-<tr class="even">
-<td align="left">Number of rows</td>
-<td align="left">34740</td>
-</tr>
-<tr class="odd">
-<td align="left">Number of columns</td>
-<td align="left">6</td>
-</tr>
-<tr class="even">
-<td align="left">_______________________</td>
-<td align="left"></td>
-</tr>
-<tr class="odd">
-<td align="left">Column type frequency:</td>
-<td align="left"></td>
-</tr>
-<tr class="even">
-<td align="left">character</td>
-<td align="left">3</td>
-</tr>
-<tr class="odd">
-<td align="left">Date</td>
-<td align="left">1</td>
-</tr>
-<tr class="even">
-<td align="left">factor</td>
-<td align="left">1</td>
-</tr>
-<tr class="odd">
-<td align="left">numeric</td>
-<td align="left">1</td>
-</tr>
-<tr class="even">
-<td align="left">________________________</td>
-<td align="left"></td>
-</tr>
-<tr class="odd">
-<td align="left">Group variables</td>
-<td align="left">None</td>
-</tr>
-</tbody>
-</table>
-<p><strong>Variable type: character</strong></p>
-<table>
-<thead>
-<tr class="header">
-<th align="left">skim_variable</th>
-<th align="right">n_missing</th>
-<th align="right">complete_rate</th>
-<th align="right">min</th>
-<th align="right">max</th>
-<th align="right">empty</th>
-<th align="right">n_unique</th>
-<th align="right">whitespace</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="left">yld_curv</td>
-<td align="right">0</td>
-<td align="right">1</td>
-<td align="right">3</td>
-<td align="right">7</td>
-<td align="right">0</td>
-<td align="right">3</td>
-<td align="right">0</td>
-</tr>
-<tr class="even">
-<td align="left">bonds</td>
-<td align="right">0</td>
-<td align="right">1</td>
-<td align="right">6</td>
-<td align="right">10</td>
-<td align="right">0</td>
-<td align="right">2</td>
-<td align="right">0</td>
-</tr>
-<tr class="odd">
-<td align="left">geo</td>
-<td align="right">0</td>
-<td align="right">1</td>
-<td align="right">2</td>
-<td align="right">2</td>
-<td align="right">0</td>
-<td align="right">1</td>
-<td align="right">0</td>
-</tr>
-</tbody>
-</table>
-<p><strong>Variable type: Date</strong></p>
-<table>
-<thead>
-<tr class="header">
-<th align="left">skim_variable</th>
-<th align="right">n_missing</th>
-<th align="right">complete_rate</th>
-<th align="left">min</th>
-<th align="left">max</th>
-<th align="left">median</th>
-<th align="right">n_unique</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="left">time</td>
-<td align="right">0</td>
-<td align="right">1</td>
-<td align="left">2004-09-01</td>
-<td align="left">2020-09-01</td>
-<td align="left">2012-09-01</td>
-<td align="right">193</td>
-</tr>
-</tbody>
-</table>
-<p><strong>Variable type: factor</strong></p>
-<table>
-<thead>
-<tr class="header">
-<th align="left">skim_variable</th>
-<th align="right">n_missing</th>
-<th align="right">complete_rate</th>
-<th align="left">ordered</th>
-<th align="right">n_unique</th>
-<th align="left">top_counts</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="left">maturity</td>
-<td align="right">0</td>
-<td align="right">1</td>
-<td align="left">TRUE</td>
-<td align="right">30</td>
-<td align="left">Y1: 1158, Y2: 1158, Y3: 1158, Y4: 1158</td>
-</tr>
-</tbody>
-</table>
-<p><strong>Variable type: numeric</strong></p>
-<table>
-<thead>
-<tr class="header">
-<th align="left">skim_variable</th>
-<th align="right">n_missing</th>
-<th align="right">complete_rate</th>
-<th align="right">mean</th>
-<th align="right">sd</th>
-<th align="right">p0</th>
-<th align="right">p25</th>
-<th align="right">p50</th>
-<th align="right">p75</th>
-<th align="right">p100</th>
-<th align="left">hist</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="left">values</td>
-<td align="right">0</td>
-<td align="right">1</td>
-<td align="right">2.68</td>
-<td align="right">1.67</td>
-<td align="right">-0.96</td>
-<td align="right">1.24</td>
-<td align="right">2.9</td>
-<td align="right">4.14</td>
-<td align="right">6.08</td>
-<td align="left">▃▅▅▇▂</td>
-</tr>
-</tbody>
-</table>
 <pre class="r"><code>yield_curve &lt;- yield_curve %&gt;% 
   mutate(year = year(time),
          month = month(time))</code></pre>
 </div>
-<div id="slope" class="section level2">
-<h2>slope</h2>
+<div id="how-yield-changes-over-time" class="section level2">
+<h2>How yield changes over time</h2>
+<p>As we can see below, the spot rate of Euro government bonds decreases gradually. In 2008 financial crisis, the yield decreased a lot (especially for short-term bonds) to save the economy, and resumed since 2010.
+Before 2012, the long-term bond yield was stable, but decreased greatly since then, mainly caused by Greece debt crisis.</p>
+<pre class="r"><code>yield_curve %&gt;% 
+  filter(maturity %in% c(&quot;Y1&quot;, &quot;Y5&quot;, &quot;Y10&quot;, &quot;Y30&quot;)) %&gt;% 
+  filter(yld_curv == &quot;SPOT_RT&quot;, #spot rate
+         bonds == &quot;CGB_EA&quot;) %&gt;% 
+  ggplot(aes(x = time, y = values)) +
+  geom_line() +
+  facet_wrap(~maturity) +
+  labs(title = &quot;spot yield decreases gradually&quot;,
+       subtitle = &quot;all euro area central government bonds&quot;,
+       caption = &quot;Sources: Eurostat, code = irt_euryld_m&quot;,
+       x = &quot;&quot;,
+       y = &quot;spot rate (%)&quot;) +
+  theme_bw()</code></pre>
+<p><img src="/projects/project2/index2_files/figure-html/yield_change-1.png" width="960" style="display: block; margin: auto;" /></p>
+</div>
+<div id="how-yield-slope-changes-over-time" class="section level2">
+<h2>How yield slope changes over time</h2>
 <p>During financial crisis and recessions, the yield difference of 30-year and 1-year government bonds tends to be smaller.</p>
 <pre class="r"><code>yield_curve %&gt;% 
   pivot_wider(names_from = &quot;maturity&quot;,
@@ -306,9 +145,11 @@ glimpse(yield_curve)</code></pre>
        y = &quot;spot rate difference&quot;) +
   scale_y_continuous(breaks = c(0,1,2,3,4)) +
   theme_bw()</code></pre>
-<p><img src="/projects/project2/index2_files/figure-html/spotrate-1.png" width="648" style="display: block; margin: auto;" />
-## spread
-Yield spread of AAA-rated and all government bonds widened from 2010 to 2015, mainly caused by Greece debt crisis. In other times, investors believe there is little probability that governments default their bonds.</p>
+<p><img src="/projects/project2/index2_files/figure-html/spotrate-1.png" width="960" style="display: block; margin: auto;" /></p>
+</div>
+<div id="how-spread-changes-over-time" class="section level2">
+<h2>How spread changes over time</h2>
+<p>Yield spread of AAA-rated and all government bonds widened from 2010 to 2015, mainly caused by Greece debt crisis. In other times, investors believe there is little probability that governments would default their bonds.</p>
 <pre class="r"><code>yield_curve %&gt;% 
   pivot_wider(names_from = &quot;bonds&quot;,
               values_from = &quot;values&quot;) %&gt;% 
@@ -323,8 +164,7 @@ Yield spread of AAA-rated and all government bonds widened from 2010 to 2015, ma
        x = &quot;&quot;,
        y = &quot;yield spread&quot;) +
   theme_bw()</code></pre>
-<p><img src="/projects/project2/index2_files/figure-html/unnamed-chunk-1-1.png" width="648" style="display: block; margin: auto;" /></p>
-</div>
+<p><img src="/projects/project2/index2_files/figure-html/spread-1.png" width="960" style="display: block; margin: auto;" /></p>
 </div>
 
                         </div>
