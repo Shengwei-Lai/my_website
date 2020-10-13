@@ -80,13 +80,11 @@
                                 <h1>Arrivals at tourist accommodation establishments</h1>
                             </header>
                             
-                                <span class="image main"><img src="/img/projects/pic10.jpg" alt="" /></span>
+                                <span class="image main"><img src="/img/projects/tourism.jpg" alt="" /></span>
                             
                             
 
 
-<div id="tourism" class="section level1">
-<h1>Tourism</h1>
 <div id="get-data" class="section level2">
 <h2>get data</h2>
 <p>download data from <a href="https://ec.europa.eu/eurostat/databrowser/view/tour_occ_arm/default/table?lang=en">Eurostat</a></p>
@@ -100,167 +98,6 @@ glimpse(tour_occ_arm)</code></pre>
 ## $ geo     &lt;chr&gt; &quot;BG&quot;, &quot;CH&quot;, &quot;ES&quot;, &quot;FI&quot;, &quot;HR&quot;, &quot;HU&quot;, &quot;IS&quot;, &quot;LI&quot;, &quot;LV&quot;, &quot;NL&quot;,...
 ## $ time    &lt;date&gt; 2020-07-01, 2020-07-01, 2020-07-01, 2020-07-01, 2020-07-01...
 ## $ values  &lt;dbl&gt; 181685, 348727, 1112680, 41523, 332979, 126349, 80482, 7690...</code></pre>
-<pre class="r"><code>skim(tour_occ_arm)</code></pre>
-<table>
-<caption><span id="tab:getdata">Table 1: </span>Data summary</caption>
-<tbody>
-<tr class="odd">
-<td align="left">Name</td>
-<td align="left">tour_occ_arm</td>
-</tr>
-<tr class="even">
-<td align="left">Number of rows</td>
-<td align="left">216654</td>
-</tr>
-<tr class="odd">
-<td align="left">Number of columns</td>
-<td align="left">6</td>
-</tr>
-<tr class="even">
-<td align="left">_______________________</td>
-<td align="left"></td>
-</tr>
-<tr class="odd">
-<td align="left">Column type frequency:</td>
-<td align="left"></td>
-</tr>
-<tr class="even">
-<td align="left">character</td>
-<td align="left">4</td>
-</tr>
-<tr class="odd">
-<td align="left">Date</td>
-<td align="left">1</td>
-</tr>
-<tr class="even">
-<td align="left">numeric</td>
-<td align="left">1</td>
-</tr>
-<tr class="odd">
-<td align="left">________________________</td>
-<td align="left"></td>
-</tr>
-<tr class="even">
-<td align="left">Group variables</td>
-<td align="left">None</td>
-</tr>
-</tbody>
-</table>
-<p><strong>Variable type: character</strong></p>
-<table>
-<thead>
-<tr class="header">
-<th align="left">skim_variable</th>
-<th align="right">n_missing</th>
-<th align="right">complete_rate</th>
-<th align="right">min</th>
-<th align="right">max</th>
-<th align="right">empty</th>
-<th align="right">n_unique</th>
-<th align="right">whitespace</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="left">c_resid</td>
-<td align="right">0</td>
-<td align="right">1</td>
-<td align="right">3</td>
-<td align="right">5</td>
-<td align="right">0</td>
-<td align="right">3</td>
-<td align="right">0</td>
-</tr>
-<tr class="even">
-<td align="left">unit</td>
-<td align="right">0</td>
-<td align="right">1</td>
-<td align="right">2</td>
-<td align="right">6</td>
-<td align="right">0</td>
-<td align="right">2</td>
-<td align="right">0</td>
-</tr>
-<tr class="odd">
-<td align="left">nace_r2</td>
-<td align="right">0</td>
-<td align="right">1</td>
-<td align="right">4</td>
-<td align="right">9</td>
-<td align="right">0</td>
-<td align="right">5</td>
-<td align="right">0</td>
-</tr>
-<tr class="even">
-<td align="left">geo</td>
-<td align="right">0</td>
-<td align="right">1</td>
-<td align="right">2</td>
-<td align="right">9</td>
-<td align="right">0</td>
-<td align="right">42</td>
-<td align="right">0</td>
-</tr>
-</tbody>
-</table>
-<p><strong>Variable type: Date</strong></p>
-<table>
-<thead>
-<tr class="header">
-<th align="left">skim_variable</th>
-<th align="right">n_missing</th>
-<th align="right">complete_rate</th>
-<th align="left">min</th>
-<th align="left">max</th>
-<th align="left">median</th>
-<th align="right">n_unique</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="left">time</td>
-<td align="right">0</td>
-<td align="right">1</td>
-<td align="left">1990-01-01</td>
-<td align="left">2020-07-01</td>
-<td align="left">2012-05-01</td>
-<td align="right">367</td>
-</tr>
-</tbody>
-</table>
-<p><strong>Variable type: numeric</strong></p>
-<table>
-<thead>
-<tr class="header">
-<th align="left">skim_variable</th>
-<th align="right">n_missing</th>
-<th align="right">complete_rate</th>
-<th align="right">mean</th>
-<th align="right">sd</th>
-<th align="right">p0</th>
-<th align="right">p25</th>
-<th align="right">p50</th>
-<th align="right">p75</th>
-<th align="right">p100</th>
-<th align="left">hist</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="left">values</td>
-<td align="right">3153</td>
-<td align="right">0.99</td>
-<td align="right">1273627</td>
-<td align="right">6292365</td>
-<td align="right">-100</td>
-<td align="right">4</td>
-<td align="right">264</td>
-<td align="right">239309</td>
-<td align="right">1.46e+08</td>
-<td align="left">▇▁▁▁▁</td>
-</tr>
-</tbody>
-</table>
 <p>I want to look at total number of arrivals at tourist accommodation establishments in France, Germany, Spain and Italy since 2000</p>
 <pre class="r"><code>tourism &lt;- tour_occ_arm %&gt;% 
   filter(c_resid == &quot;TOTAL&quot;, #country of residence == total
@@ -286,6 +123,53 @@ glimpse(tour_occ_arm)</code></pre>
   theme(legend.position = &quot;none&quot;)</code></pre>
 <p><img src="/projects/project4/index4_files/figure-html/plot-1.png" width="648" style="display: block; margin: auto;" /></p>
 </div>
+<div id="average-accommodation-by-month" class="section level2">
+<h2>average accommodation by month</h2>
+<p>July and August have the highest number of arrivals for all four countries.</p>
+<pre class="r"><code>tourism %&gt;% 
+  mutate(month = month(time)) %&gt;% 
+  group_by(month, geo) %&gt;% 
+  summarise(mean_acco = mean(values)) %&gt;% 
+  ggplot(aes(x = month, y = mean_acco, fill = geo)) +
+  geom_col() +
+  facet_wrap(~geo) +
+  theme_bw() +
+  labs(title = &quot;average accommodation by month&quot;,
+       subtitle = &quot;in million&quot;,
+       x = &quot;month&quot;,
+       y = &quot;millions of arrivals at tourist accommodation&quot;,
+       caption = &quot;Sources: Eurostat, code = tour_occ_arm&quot;) +
+  scale_x_continuous(breaks = c(1,2,3,4,5,6,7,8,9,10,11,12)) +
+  theme(legend.position = &quot;none&quot;)</code></pre>
+<p><img src="/projects/project4/index4_files/figure-html/mean%20accommodation-1.png" width="960" style="display: block; margin: auto;" /></p>
+<p>France has the highest number of arrivals compared to other countries</p>
+<pre class="r"><code>tourism2 &lt;- tourism %&gt;% 
+  mutate(month = month(time)) %&gt;% 
+  group_by(month, geo) %&gt;% 
+  summarise(mean_acco = mean(values)) %&gt;% #average accommodation per month per country
+  mutate(month_acco = mean(mean_acco), #average accommodation per month for all countries
+         diff = month_acco - mean_acco) 
+
+tourism2 %&gt;% 
+  ggplot(aes(x = month, y = month_acco), color = &quot;black&quot;) +
+  geom_line() +
+  geom_ribbon(aes(ymin = mean_acco + ifelse(diff&gt;0, 0, diff),
+                  ymax = month_acco),
+              fill = &quot;red&quot;, alpha = 0.1) +
+  geom_ribbon(aes(ymin = month_acco,
+                  ymax = mean_acco + ifelse(diff&gt;0, diff, 0)),
+              fill = &quot;blue&quot;, alpha = 0.1) +
+  facet_wrap(~geo) +
+  theme_bw() +
+  labs(title = &quot;average accommodation by month&quot;,
+       subtitle = &quot;in million&quot;,
+       x = &quot;month&quot;,
+       y = &quot;millions of arrivals at tourist accommodation&quot;,
+       caption = &quot;Sources: Eurostat, code = tour_occ_arm&quot;) +
+  scale_x_continuous(breaks = c(1,2,3,4,5,6,7,8,9,10,11,12)) +
+  theme(legend.position = &quot;none&quot;)</code></pre>
+<p><img src="/projects/project4/index4_files/figure-html/unnamed-chunk-1-1.png" width="960" style="display: block; margin: auto;" /></p>
+</div>
 <div id="impact-of-covid-19-to-italy" class="section level2">
 <h2>impact of Covid-19 to Italy</h2>
 <pre class="r"><code>Italy_tourism &lt;- tourism %&gt;% 
@@ -303,8 +187,7 @@ glimpse(tour_occ_arm)</code></pre>
     caption = &quot;Sources: Eurostat, code = tour_occ_arm&quot;
   )+
     theme_bw()</code></pre>
-<p><img src="/projects/project4/index4_files/figure-html/unnamed-chunk-1-1.png" width="648" style="display: block; margin: auto;" /></p>
-</div>
+<p><img src="/projects/project4/index4_files/figure-html/unnamed-chunk-2-1.png" width="648" style="display: block; margin: auto;" /></p>
 </div>
 
                         </div>

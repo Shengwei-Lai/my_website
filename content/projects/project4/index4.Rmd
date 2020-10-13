@@ -3,7 +3,7 @@ title: "Arrivals at tourist accommodation establishments"
 date: '2020-10-07'
 description: ''
 draft: no
-image: pic10.jpg
+image: tourism.jpg
 keywords: ''
 slug: tourist
 categories:
@@ -45,13 +45,11 @@ library(seasonal)
 library(tmap) #mapping eurostat data
 ```
 
-# Tourism
 ## get data
 download data from [Eurostat](https://ec.europa.eu/eurostat/databrowser/view/tour_occ_arm/default/table?lang=en)
 ```{r getdata}
 tour_occ_arm <- get_eurostat(id="tour_occ_arm")
 glimpse(tour_occ_arm)
-skim(tour_occ_arm)
 ```
 
 I want to look at total number of arrivals at tourist accommodation establishments in France, Germany, Spain and Italy since 2000
@@ -77,6 +75,55 @@ tourism %>%
        x = "",
        y = "millions of arrivals at tourist accommodation",
        caption = "Sources: Eurostat, code = tour_occ_arm") +
+  theme(legend.position = "none")
+```
+
+## average accommodation by month
+July and August have the highest number of arrivals for all four countries.
+```{r mean accommodation, fig.height=8, fig.width=10}
+tourism %>% 
+  mutate(month = month(time)) %>% 
+  group_by(month, geo) %>% 
+  summarise(mean_acco = mean(values)) %>% 
+  ggplot(aes(x = month, y = mean_acco, fill = geo)) +
+  geom_col() +
+  facet_wrap(~geo) +
+  theme_bw() +
+  labs(title = "average accommodation by month",
+       subtitle = "in million",
+       x = "month",
+       y = "millions of arrivals at tourist accommodation",
+       caption = "Sources: Eurostat, code = tour_occ_arm") +
+  scale_x_continuous(breaks = c(1,2,3,4,5,6,7,8,9,10,11,12)) +
+  theme(legend.position = "none")
+```
+
+France has the highest number of arrivals compared to other countries
+```{r, fig.height=8, fig.width=10}
+tourism2 <- tourism %>% 
+  mutate(month = month(time)) %>% 
+  group_by(month, geo) %>% 
+  summarise(mean_acco = mean(values)) %>% #average accommodation per month per country
+  mutate(month_acco = mean(mean_acco), #average accommodation per month for all countries
+         diff = month_acco - mean_acco) 
+
+tourism2 %>% 
+  ggplot(aes(x = month, y = month_acco), color = "black") +
+  geom_line() +
+  geom_ribbon(aes(ymin = mean_acco + ifelse(diff>0, 0, diff),
+                  ymax = month_acco),
+              fill = "red", alpha = 0.1) +
+  geom_ribbon(aes(ymin = month_acco,
+                  ymax = mean_acco + ifelse(diff>0, diff, 0)),
+              fill = "blue", alpha = 0.1) +
+  facet_wrap(~geo) +
+  theme_bw() +
+  labs(title = "average accommodation by month",
+       subtitle = "in million",
+       x = "month",
+       y = "millions of arrivals at tourist accommodation",
+       caption = "Sources: Eurostat, code = tour_occ_arm") +
+  scale_x_continuous(breaks = c(1,2,3,4,5,6,7,8,9,10,11,12)) +
   theme(legend.position = "none")
 ```
 
