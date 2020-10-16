@@ -52,9 +52,9 @@
             
                 <li><a href="/">Home</a></li>
             
-                <li><a href="/blogs">Blogs</a></li>
+                <li><a href="/projects">Blogs</a></li>
             
-                <li><a href="/blogs/ipsum">Generic Blog</a></li>
+                <li><a href="/projects/project1/stocks">Generic Blog</a></li>
             
                 <li><a href="/elements.html">Elements</a></li>
             
@@ -83,8 +83,6 @@
                                 <span class="image main"><img src="/img/projects/stock.jpg" alt="" /></span>
                             
                             
-<script src="/rmarkdown-libs/kePrint/kePrint.js"></script>
-<link href="/rmarkdown-libs/lightable/lightable.css" rel="stylesheet" />
 
 
 <div id="get-data" class="section level2">
@@ -128,18 +126,8 @@ myStocks &lt;- myStocks %&gt;%
 </div>
 <div id="calculate-financial-returns" class="section level2">
 <h2>calculate financial returns</h2>
-<p>Calculate daily and monthly returns</p>
-<pre class="r"><code>#daily return
-myStocks_returns_daily &lt;- myStocks %&gt;%
-  tq_transmute(select = adjusted, 
-               mutate_fun = periodReturn, 
-               period = &quot;daily&quot;, 
-               type = &quot;log&quot;,
-               col_rename = &quot;daily.returns&quot;,
-               cols = c(nested.col)) %&gt;% 
-  left_join(name)
-
-#monthly return
+<p>Calculate monthly returns of all stocks and SSE index.</p>
+<pre class="r"><code>#monthly return
 myStocks_returns_monthly &lt;- myStocks %&gt;%
   tq_transmute(select = adjusted, 
                mutate_fun = periodReturn, 
@@ -148,13 +136,14 @@ myStocks_returns_monthly &lt;- myStocks %&gt;%
                col_rename = &quot;monthly.returns&quot;,
                cols = c(nested.col)) %&gt;% 
   left_join(name)</code></pre>
-<p>plot monthly returns</p>
+<p>create a boxplot of monthly returns</p>
 <pre class="r"><code>myStocks_returns_monthly %&gt;% 
   group_by(name) %&gt;% 
-  mutate(median_monthly_return = median(monthly.returns)) %&gt;% 
+  mutate(median_monthly_return = median(monthly.returns)) %&gt;% #calculate median return
+  # reorder name by median monthly return
   ggplot(aes(x = monthly.returns, y = reorder(name, median_monthly_return),color = name)) +
   geom_boxplot() +
-  labs(title = &quot;boxplot of monthly median return&quot;,
+  labs(title = &quot;boxplot of monthly return&quot;,
        subtitle = &quot;from 2015-01-01 to 2020-09-30&quot;,
        x = &quot;monthly return&quot;,
        y = &quot;stocks&quot;, 
@@ -167,176 +156,29 @@ myStocks_returns_monthly &lt;- myStocks %&gt;%
 </div>
 <div id="sharpe-ratio" class="section level2">
 <h2>Sharpe ratio</h2>
+<p>calculate Sharpe ratio of different stocks and SSE index. <code>Moutai</code> has the highest Sharpe ratio and SSE index has the lowest Sharpe ratio. <strong>It indicates that A-share market in China is not efficient and good stocks could outperform the market consistently.</strong></p>
 <pre class="r"><code>myStocks_returns_monthly %&gt;%
-  tq_performance(Ra = monthly.returns, 
-                 Rb = NULL, 
-                 performance_fun = SharpeRatio) %&gt;% 
-  kable() %&gt;%
-  kable_styling(c(&quot;striped&quot;, &quot;bordered&quot;)) </code></pre>
-<table class="table table-striped table-bordered" style="margin-left: auto; margin-right: auto;">
-<thead>
-<tr>
-<th style="text-align:left;">
-symbol
-</th>
-<th style="text-align:right;">
-ESSharpe(Rf=0%,p=95%)
-</th>
-<th style="text-align:right;">
-StdDevSharpe(Rf=0%,p=95%)
-</th>
-<th style="text-align:right;">
-VaRSharpe(Rf=0%,p=95%)
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left;">
-600519.SS
-</td>
-<td style="text-align:right;">
-0.224
-</td>
-<td style="text-align:right;">
-0.434
-</td>
-<td style="text-align:right;">
-0.349
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-000651.SZ
-</td>
-<td style="text-align:right;">
-0.131
-</td>
-<td style="text-align:right;">
-0.218
-</td>
-<td style="text-align:right;">
-0.168
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-601318.SS
-</td>
-<td style="text-align:right;">
-0.102
-</td>
-<td style="text-align:right;">
-0.195
-</td>
-<td style="text-align:right;">
-0.134
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-600276.SS
-</td>
-<td style="text-align:right;">
-0.242
-</td>
-<td style="text-align:right;">
-0.377
-</td>
-<td style="text-align:right;">
-0.318
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-600585.SS
-</td>
-<td style="text-align:right;">
-0.121
-</td>
-<td style="text-align:right;">
-0.224
-</td>
-<td style="text-align:right;">
-0.157
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-000002.SZ
-</td>
-<td style="text-align:right;">
-0.075
-</td>
-<td style="text-align:right;">
-0.155
-</td>
-<td style="text-align:right;">
-0.224
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-600009.SS
-</td>
-<td style="text-align:right;">
-0.166
-</td>
-<td style="text-align:right;">
-0.281
-</td>
-<td style="text-align:right;">
-0.211
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-601398.SS
-</td>
-<td style="text-align:right;">
-0.050
-</td>
-<td style="text-align:right;">
-0.092
-</td>
-<td style="text-align:right;">
-0.065
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-002594.SZ
-</td>
-<td style="text-align:right;">
-0.115
-</td>
-<td style="text-align:right;">
-0.175
-</td>
-<td style="text-align:right;">
-0.140
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-000001.SS
-</td>
-<td style="text-align:right;">
-0.009
-</td>
-<td style="text-align:right;">
-0.023
-</td>
-<td style="text-align:right;">
-0.014
-</td>
-</tr>
-</tbody>
-</table>
+  group_by(name) %&gt;% 
+  summarise(mean_return = mean(monthly.returns),   #calculate mean monthly return
+         sd_return = sd(monthly.returns),          #calculate standard deviation
+         Sharpe_ratio = mean_return/sd_return)     #assume risk free rate equals 0</code></pre>
+<pre><code>## # A tibble: 10 x 4
+##    name             mean_return sd_return Sharpe_ratio
+##    &lt;ord&gt;                  &lt;dbl&gt;     &lt;dbl&gt;        &lt;dbl&gt;
+##  1 Moutai               0.0373     0.0859       0.434 
+##  2 Gree                 0.0228     0.104        0.218 
+##  3 PingAn               0.0146     0.0748       0.195 
+##  4 Hengrui              0.0318     0.0842       0.377 
+##  5 Conch Cement         0.0198     0.0887       0.224 
+##  6 Vanke                0.0194     0.125        0.155 
+##  7 Shanghai Airport     0.0216     0.0768       0.281 
+##  8 ICBC                 0.00521    0.0567       0.0919
+##  9 BYD                  0.0222     0.127        0.175 
+## 10 SSE_Index            0.00144    0.0631       0.0229</code></pre>
 </div>
 <div id="calculate-the-correlation" class="section level2">
 <h2>calculate the correlation</h2>
-<p>We see BYD has lower correlation with other stocks and index.</p>
+<p>We see <code>Vanke</code>, which is a real estate company, has the lowest correlation with SSE index, and the possible reason is that real estate market in China was very strong and resilient. When the economy was in recessions, the government would release s series of policies to support real the estate market.</p>
 <pre class="r"><code>table_capm_returns &lt;- myStocks_returns_monthly[-1] %&gt;%
             pivot_wider(names_from = &quot;name&quot;,
                         values_from = &quot;monthly.returns&quot;)  
@@ -371,10 +213,12 @@ table_capm_returns[-1] %&gt;% #exclude &quot;Date&quot;, the first column, from 
 </div>
 <div id="capm" class="section level2">
 <h2>CAPM</h2>
-<p>I firstly want to investigate Moutai since it has largest median monthly return. I assume the risk-free rate is zero.
-* beta is 0.90 and significant, which means when market decreases 1%, its price only decreases 0.90%.
-* about 42.9% of Moutai return could be explained by the market, and 57.1% is related to its individual risk.
-* Moutai’s alpha is 3.6% per month, indicating it’s a really good investment.</p>
+<p>I firstly want to investigate Moutai since it has largest median monthly return. I assume the risk-free rate is zero.</p>
+<ul>
+<li>beta is 0.90 and significant, which means when market decreases 1%, its price only decreases 0.90%.</li>
+<li>about 42.9% of Moutai return could be explained by the market, and 57.1% is related to its individual risk.</li>
+<li>Moutai’s alpha is 3.6% per month, indicating it’s a really good investment.</li>
+</ul>
 <pre class="r"><code>CAPM &lt;- lm(Moutai~SSE_Index, data = table_capm_returns)
 summary(CAPM)</code></pre>
 <pre><code>## 

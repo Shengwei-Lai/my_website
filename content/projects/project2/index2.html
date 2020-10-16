@@ -15,7 +15,7 @@ categories:
 
 <div id="get-data" class="section level2">
 <h2>get data</h2>
-<p>download data from <a href="https://ec.europa.eu/eurostat/databrowser/view/irt_euryld_m/default/table?lang=en">Eurostat</a></p>
+<p>download data from <a href="https://ec.europa.eu/eurostat/databrowser/view/irt_euryld_m/default/table?lang=en">Eurostat (Euro yield curves - monthly data), code = irt_euryld_m</a>. The dataset contains government bonds yield of euro region.</p>
 <pre class="r"><code>yield_curve &lt;- get_eurostat(id=&quot;irt_euryld_m&quot;)
 yield_curve$maturity &lt;- factor(yield_curve$maturity,
                                ordered = TRUE,
@@ -37,13 +37,18 @@ glimpse(yield_curve)</code></pre>
          month = month(time))</code></pre>
 </div>
 <div id="how-yield-changes-over-time" class="section level2">
-<h2>How yield changes over time</h2>
-<p>As we can see below, the spot rate of Euro government bonds decreases gradually. In 2008 financial crisis, the yield decreased a lot (especially for short-term bonds) to save the economy, and resumed since 2010.
-Before 2012, the long-term bond yield was stable, but decreased greatly since then, mainly caused by Greece debt crisis.</p>
+<h2>How yield changes over time?</h2>
+<p>As we can see below, the spot rate of Euro government bonds decreased greatly in several periods.</p>
+<ul>
+<li>In 2008 financial crisis, the yield decreased a lot (especially for short-term bonds) to save the economy, and resumed since 2010.</li>
+<li>Before 2012, the long-term bond yield was stable, but decreased greatly since then, mainly caused by Greece debt crisis.</li>
+<li>Since the pandemic, we also see a great fall of spot yields.</li>
+</ul>
+<p>On the other hand, short term bonds already have negative yields and long term bonds have very low yields, indicating little space of monetary policies.</p>
 <pre class="r"><code>yield_curve %&gt;% 
   filter(maturity %in% c(&quot;Y1&quot;, &quot;Y5&quot;, &quot;Y10&quot;, &quot;Y30&quot;)) %&gt;% 
   filter(yld_curv == &quot;SPOT_RT&quot;, #spot rate
-         bonds == &quot;CGB_EA&quot;) %&gt;% 
+         bonds == &quot;CGB_EA&quot;) %&gt;% #all government bonds
   ggplot(aes(x = time, y = values)) +
   geom_line() +
   facet_wrap(~maturity) +
@@ -55,8 +60,28 @@ Before 2012, the long-term bond yield was stable, but decreased greatly since th
   theme_bw()</code></pre>
 <p><img src="/projects/project2/index2_files/figure-html/yield_change-1.png" width="960" style="display: block; margin: auto;" /></p>
 </div>
+<div id="how-yield-curve-looks-like-in-different-times" class="section level2">
+<h2>How yield curve looks like in different times?</h2>
+<p>The yield curve is much flatter currently than in past years because of aggressive monetary policies.</p>
+<pre class="r"><code>yield_curve %&gt;% 
+  filter(yld_curv == &quot;SPOT_RT&quot;, #spot rate
+         bonds == &quot;CGB_EA&quot;,
+         year %in% c(2005, 2010, 2015, 2020),
+         month == 9) %&gt;% #all government bonds
+  ggplot(aes(x = maturity, y = values, group = 1)) +
+  geom_line() +
+  facet_wrap(~time) +
+  labs(title = &quot;yield curve in different years&quot;,
+       subtitle = &quot;all euro area central government bonds&quot;,
+       caption = &quot;Sources: Eurostat, code = irt_euryld_m&quot;,
+       x = &quot;&quot;,
+       y = &quot;spot rate (%)&quot;) +
+  scale_x_discrete(breaks = c(&quot;Y1&quot;, &quot;Y5&quot;, &quot;Y10&quot;, &quot;Y20&quot;, &quot;Y30&quot;)) +
+  theme_bw()</code></pre>
+<p><img src="/projects/project2/index2_files/figure-html/yield_curve-1.png" width="960" style="display: block; margin: auto;" /></p>
+</div>
 <div id="how-yield-slope-changes-over-time" class="section level2">
-<h2>How yield slope changes over time</h2>
+<h2>How yield slope changes over time?</h2>
 <p>During financial crisis and recessions, the yield difference of 30-year and 1-year government bonds tends to be smaller.</p>
 <pre class="r"><code>yield_curve %&gt;% 
   pivot_wider(names_from = &quot;maturity&quot;,
@@ -76,7 +101,7 @@ Before 2012, the long-term bond yield was stable, but decreased greatly since th
 <p><img src="/projects/project2/index2_files/figure-html/spotrate-1.png" width="960" style="display: block; margin: auto;" /></p>
 </div>
 <div id="how-spread-changes-over-time" class="section level2">
-<h2>How spread changes over time</h2>
+<h2>How spread changes over time?</h2>
 <p>Yield spread of AAA-rated and all government bonds widened from 2010 to 2015, mainly caused by Greece debt crisis. In other times, investors believe there is little probability that governments would default their bonds.</p>
 <pre class="r"><code>yield_curve %&gt;% 
   pivot_wider(names_from = &quot;bonds&quot;,

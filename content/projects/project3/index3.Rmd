@@ -46,13 +46,17 @@ library(tmap) #mapping eurostat data
 ```
 
 ## get data
-download data from [Eurostat](https://ec.europa.eu/eurostat/databrowser/view/nrg_pc_202/default/table?lang=en)
+download data from [Eurostat (Gas prices for household consumers), code = nrg_pc_202](https://ec.europa.eu/eurostat/databrowser/view/nrg_pc_202/default/table?lang=en). The dataset contains gas price as for different consumption levels and times.
 ```{r getdata}
 gas_price <- get_eurostat(id="nrg_pc_202")
 glimpse(gas_price)
 ```
 
-Filter data: unit of measure is Gigajoule (gross calorific value), exclude taxes and levies, use euro as currency
+Filter data: 
+
+* unit of measure is Gigajoule (gross calorific value)
+* exclude taxes and levies
+* use euro as currency
 ```{r tidy_data}
 gas_price <- gas_price %>% 
   filter(unit == "GJ_GCV", #unit of measure = Gigajoule (gross calorific value -GCV)
@@ -85,6 +89,17 @@ gas_price %>%
   NULL          
 ```
 
+Then, I want to investigate are there any significant price difference between different consumption levels (`20GJ<consumption<200GJ` and `consumption>200GJ`).
+
+After running the t test, we could see significant price difference.
+```{r con_diff}
+gas_price1 <- gas_price %>% 
+  group_by(consumption) %>% 
+  filter(consumption %in% c("20GJ<consumption<200GJ", "consumption>200GJ")) 
+
+t.test(values ~ consumption, data = gas_price1)
+```
+
 ## price by region
 Liechtenstein has the highest gas price, Georgia has the lowest gas price
 ```{r country, fig.height=5, fig.width=10}
@@ -94,7 +109,7 @@ gas_price %>%
   mutate(median_price = median(values)) %>% 
   ggplot(aes(x = values, y = reorder(geo, median_price), color = geo)) +
   geom_boxplot() +
-  labs(title = "gas price by country",
+  labs(title = "gas price by region",
        x = "gas price (euro/gigajoule)",
        y = "",
        caption = "Source: Eurostat, code = nrg_pc_202") +
@@ -103,7 +118,7 @@ gas_price %>%
   NULL          
 ```
 
-## how gas price changes over time
+## How gas price changes over time?
 Average gas price increased to the highest level during 2013-2014, then decreased gradually
 ```{r price, fig.height=5, fig.width=10}
 gas_price %>% 
@@ -114,7 +129,7 @@ gas_price %>%
   geom_line() +
   geom_smooth() +
   labs(title = "how gas price changes over time?",
-       subtitle = "by consumption",
+       subtitle = "by consumption level",
        x = "",
        y = "average price (euro/gigajoule)",
        caption = "Source: Eurostat, code = nrg_pc_202") +

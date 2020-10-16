@@ -52,9 +52,9 @@
             
                 <li><a href="/">Home</a></li>
             
-                <li><a href="/blogs">Blogs</a></li>
+                <li><a href="/projects">Blogs</a></li>
             
-                <li><a href="/blogs/ipsum">Generic Blog</a></li>
+                <li><a href="/projects/project1/stocks">Generic Blog</a></li>
             
                 <li><a href="/elements.html">Elements</a></li>
             
@@ -87,10 +87,10 @@
 
 <div id="get-data" class="section level2">
 <h2>get data</h2>
-<p>download data from <a href="https://ec.europa.eu/eurostat/databrowser/view/tour_occ_arm/default/table?lang=en">Eurostat</a></p>
+<p>download data from <a href="https://ec.europa.eu/eurostat/databrowser/view/tour_occ_arm/default/table?lang=en">Eurostat (Arrivals at tourist accommodation establishments), code = tour_occ_arm</a>. The dataset contains number of arrivals in different countries.</p>
 <pre class="r"><code>tour_occ_arm &lt;- get_eurostat(id=&quot;tour_occ_arm&quot;)
 glimpse(tour_occ_arm)</code></pre>
-<pre><code>## Rows: 216,654
+<pre><code>## Rows: 206,839
 ## Columns: 6
 ## $ c_resid &lt;chr&gt; &quot;FOR&quot;, &quot;FOR&quot;, &quot;FOR&quot;, &quot;FOR&quot;, &quot;FOR&quot;, &quot;FOR&quot;, &quot;FOR&quot;, &quot;FOR&quot;, &quot;FO...
 ## $ unit    &lt;chr&gt; &quot;NR&quot;, &quot;NR&quot;, &quot;NR&quot;, &quot;NR&quot;, &quot;NR&quot;, &quot;NR&quot;, &quot;NR&quot;, &quot;NR&quot;, &quot;NR&quot;, &quot;NR&quot;,...

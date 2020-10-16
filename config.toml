@@ -94,25 +94,25 @@ disqusShortname = ""
     [[params.tiles.showcase]]
       title = "Stocks"
       subtitle = "selected stocks in China A-share market"
-      image = "pic01.jpg"
+      image = "projects/stock.jpg"
       url = "projects/project1/stocks"
 
     [[params.tiles.showcase]]
       title = "European yield curve"
       subtitle = "European yield curve from 2004 to 2020"
-      image = "pic02.jpg"
+      image = "projects/euro.jpg"
       url = "projects/project2/yield"
 
     [[params.tiles.showcase]]
       title = "Gas price"
       subtitle = "gas price in Europe from 2007 to 2019"
-      image = "pic03.jpg"
+      image = "projects/gas.jpg"
       url = "projects/project3/gas"
 
     [[params.tiles.showcase]]
       title = "Tourist arrivals"
       subtitle = "Arrivals at tourist accommodation establishments"
-      image = "pic04.jpg"
+      image = "projects/tourism.jpg"
       url = "projects/project4/tourist"
 
 #    [[params.tiles.showcase]]
@@ -144,7 +144,7 @@ disqusShortname = ""
     Management. I am interested in stock markets and are looking for work opportunities 
     of equity research in both sell-side and buy-side companies."""
     buttonText = "Get Started"
-    url = "blogs"
+    url = "projects"
 
 
   # Contact section

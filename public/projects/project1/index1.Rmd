@@ -86,18 +86,8 @@ myStocks %>%
 ```
 
 ## calculate financial returns
-Calculate daily and monthly returns
+Calculate monthly returns of all stocks and SSE index.
 ``` {r returns}
-#daily return
-myStocks_returns_daily <- myStocks %>%
-  tq_transmute(select = adjusted, 
-               mutate_fun = periodReturn, 
-               period = "daily", 
-               type = "log",
-               col_rename = "daily.returns",
-               cols = c(nested.col)) %>% 
-  left_join(name)
-
 #monthly return
 myStocks_returns_monthly <- myStocks %>%
   tq_transmute(select = adjusted, 
@@ -109,14 +99,15 @@ myStocks_returns_monthly <- myStocks %>%
   left_join(name)
 ```
 
-plot monthly returns
+create a boxplot of monthly returns
 ``` {r, fig.height=5, fig.width=10}
 myStocks_returns_monthly %>% 
   group_by(name) %>% 
-  mutate(median_monthly_return = median(monthly.returns)) %>% 
+  mutate(median_monthly_return = median(monthly.returns)) %>% #calculate median return
+  # reorder name by median monthly return
   ggplot(aes(x = monthly.returns, y = reorder(name, median_monthly_return),color = name)) +
   geom_boxplot() +
-  labs(title = "boxplot of monthly median return",
+  labs(title = "boxplot of monthly return",
        subtitle = "from 2015-01-01 to 2020-09-30",
        x = "monthly return",
        y = "stocks", 
@@ -128,17 +119,17 @@ myStocks_returns_monthly %>%
 ```
 
 ## Sharpe ratio
+calculate Sharpe ratio of different stocks and SSE index. `Moutai` has the highest Sharpe ratio and SSE index has the lowest Sharpe ratio. **It indicates that A-share market in China is not efficient and good stocks could outperform the market consistently.**
 ```{r Sharpe_ratio}
 myStocks_returns_monthly %>%
-  tq_performance(Ra = monthly.returns, 
-                 Rb = NULL, 
-                 performance_fun = SharpeRatio) %>% 
-  kable() %>%
-  kable_styling(c("striped", "bordered")) 
+  group_by(name) %>% 
+  summarise(mean_return = mean(monthly.returns),   #calculate mean monthly return
+         sd_return = sd(monthly.returns),          #calculate standard deviation
+         Sharpe_ratio = mean_return/sd_return)     #assume risk free rate equals 0
 ```
 
 ## calculate the correlation
-We see BYD has lower correlation with other stocks and index. 
+We see `Vanke`, which is a real estate company, has the lowest correlation with SSE index, and the possible reason is that real estate market in China was very strong and resilient. When the economy was in recessions, the government would release s series of policies to support real the estate market.
 ```{r correlation, fig.height=10, fig.width=10}
 table_capm_returns <- myStocks_returns_monthly[-1] %>%
             pivot_wider(names_from = "name",
@@ -176,7 +167,8 @@ stocks_risk_return %>%
 ```
 
 ## CAPM
-I firstly want to investigate Moutai since it has largest median monthly return. I assume the risk-free rate is zero. 
+I firstly want to investigate Moutai since it has largest median monthly return. I assume the risk-free rate is zero.
+
  * beta is 0.90 and significant, which means when market decreases 1%, its price only decreases 0.90%.
  * about 42.9% of Moutai return could be explained by the market, and 57.1% is related to its individual risk.
  * Moutai's alpha is 3.6% per month, indicating it's a really good investment.

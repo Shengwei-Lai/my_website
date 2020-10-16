@@ -46,7 +46,7 @@ library(tmap) #mapping eurostat data
 ```
 
 ## get data
-download data from [Eurostat](https://ec.europa.eu/eurostat/databrowser/view/tour_occ_arm/default/table?lang=en)
+download data from [Eurostat (Arrivals at tourist accommodation establishments), code = tour_occ_arm](https://ec.europa.eu/eurostat/databrowser/view/tour_occ_arm/default/table?lang=en). The dataset contains number of arrivals in different countries.
 ```{r getdata}
 tour_occ_arm <- get_eurostat(id="tour_occ_arm")
 glimpse(tour_occ_arm)

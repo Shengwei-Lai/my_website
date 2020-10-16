@@ -15,10 +15,10 @@ categories:
 
 <div id="get-data" class="section level2">
 <h2>get data</h2>
-<p>download data from <a href="https://ec.europa.eu/eurostat/databrowser/view/nrg_pc_202/default/table?lang=en">Eurostat</a></p>
+<p>download data from <a href="https://ec.europa.eu/eurostat/databrowser/view/nrg_pc_202/default/table?lang=en">Eurostat (Gas prices for household consumers), code = nrg_pc_202</a>. The dataset contains gas price as for different consumption levels and times.</p>
 <pre class="r"><code>gas_price &lt;- get_eurostat(id=&quot;nrg_pc_202&quot;)
 glimpse(gas_price)</code></pre>
-<pre><code>## Rows: 42,250
+<pre><code>## Rows: 42,520
 ## Columns: 8
 ## $ product  &lt;chr&gt; &quot;4100&quot;, &quot;4100&quot;, &quot;4100&quot;, &quot;4100&quot;, &quot;4100&quot;, &quot;4100&quot;, &quot;4100&quot;, &quot;4...
 ## $ consom   &lt;chr&gt; &quot;4141901&quot;, &quot;4141901&quot;, &quot;4141901&quot;, &quot;4141901&quot;, &quot;4141901&quot;, &quot;41...
@@ -28,7 +28,12 @@ glimpse(gas_price)</code></pre>
 ## $ geo      &lt;chr&gt; &quot;AT&quot;, &quot;BE&quot;, &quot;BG&quot;, &quot;CZ&quot;, &quot;DK&quot;, &quot;EE&quot;, &quot;EL&quot;, &quot;ES&quot;, &quot;FR&quot;, &quot;GE&quot;...
 ## $ time     &lt;date&gt; 2020-01-01, 2020-01-01, 2020-01-01, 2020-01-01, 2020-01-0...
 ## $ values   &lt;dbl&gt; 27.16, 18.43, 11.37, 30.09, 27.81, 14.06, 15.19, 25.80, 36...</code></pre>
-<p>Filter data: unit of measure is Gigajoule (gross calorific value), exclude taxes and levies, use euro as currency</p>
+<p>Filter data:</p>
+<ul>
+<li>unit of measure is Gigajoule (gross calorific value)</li>
+<li>exclude taxes and levies</li>
+<li>use euro as currency</li>
+</ul>
 <pre class="r"><code>gas_price &lt;- gas_price %&gt;% 
   filter(unit == &quot;GJ_GCV&quot;, #unit of measure = Gigajoule (gross calorific value -GCV)
          tax == &quot;X_TAX&quot;, #excluding taxes and levies
@@ -58,6 +63,24 @@ gas_price$consumption &lt;- factor(gas_price$consumption,
   theme_bw() +
   NULL          </code></pre>
 <p><img src="/projects/project3/index3_files/figure-html/consom-1.png" width="960" style="display: block; margin: auto;" /></p>
+<p>Then, I want to investigate are there any significant price difference between different consumption levels (<code>20GJ&lt;consumption&lt;200GJ</code> and <code>consumption&gt;200GJ</code>).</p>
+<p>After running the t test, we could see significant price difference.</p>
+<pre class="r"><code>gas_price1 &lt;- gas_price %&gt;% 
+  group_by(consumption) %&gt;% 
+  filter(consumption %in% c(&quot;20GJ&lt;consumption&lt;200GJ&quot;, &quot;consumption&gt;200GJ&quot;)) 
+
+t.test(values ~ consumption, data = gas_price1)</code></pre>
+<pre><code>## 
+##  Welch Two Sample t-test
+## 
+## data:  values by consumption
+## t = 6, df = 1588, p-value = 9e-10
+## alternative hypothesis: true difference in means is not equal to 0
+## 95 percent confidence interval:
+##  0.663 1.282
+## sample estimates:
+## mean in group 20GJ&lt;consumption&lt;200GJ      mean in group consumption&gt;200GJ 
+##                                   12                                   11</code></pre>
 </div>
 <div id="price-by-region" class="section level2">
 <h2>price by region</h2>
@@ -68,7 +91,7 @@ gas_price$consumption &lt;- factor(gas_price$consumption,
   mutate(median_price = median(values)) %&gt;% 
   ggplot(aes(x = values, y = reorder(geo, median_price), color = geo)) +
   geom_boxplot() +
-  labs(title = &quot;gas price by country&quot;,
+  labs(title = &quot;gas price by region&quot;,
        x = &quot;gas price (euro/gigajoule)&quot;,
        y = &quot;&quot;,
        caption = &quot;Source: Eurostat, code = nrg_pc_202&quot;) +
@@ -78,7 +101,7 @@ gas_price$consumption &lt;- factor(gas_price$consumption,
 <p><img src="/projects/project3/index3_files/figure-html/country-1.png" width="960" style="display: block; margin: auto;" /></p>
 </div>
 <div id="how-gas-price-changes-over-time" class="section level2">
-<h2>how gas price changes over time</h2>
+<h2>How gas price changes over time?</h2>
 <p>Average gas price increased to the highest level during 2013-2014, then decreased gradually</p>
 <pre class="r"><code>gas_price %&gt;% 
   group_by(time, consumption) %&gt;% 
@@ -88,7 +111,7 @@ gas_price$consumption &lt;- factor(gas_price$consumption,
   geom_line() +
   geom_smooth() +
   labs(title = &quot;how gas price changes over time?&quot;,
-       subtitle = &quot;by consumption&quot;,
+       subtitle = &quot;by consumption level&quot;,
        x = &quot;&quot;,
        y = &quot;average price (euro/gigajoule)&quot;,
        caption = &quot;Source: Eurostat, code = nrg_pc_202&quot;) +
