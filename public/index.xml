@@ -6,7 +6,16 @@
     <description>Recent content on Portfolio website for Shengwei Lai</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 07 Oct 2020 00:00:00 +0000</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 20 Oct 2020 00:00:00 +0000</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>About me</title>
+      <link>/projects/project5/me/</link>
+      <pubDate>Tue, 20 Oct 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/projects/project5/me/</guid>
+      <description>Hi, my name is Shengwei Lai and I am currently a MFA2021 student in London Business School. My undergraduate school is Fudan University, School of Management. I am interested in stock markets and are looking for work opportunities of equity research in both sell-side and buy-side companies.</description>
+    </item>
+    
     <item>
       <title>Arrivals at tourist accommodation establishments</title>
       <link>/projects/project4/tourist/</link>

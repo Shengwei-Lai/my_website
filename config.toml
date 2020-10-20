@@ -69,7 +69,7 @@ disqusShortname = ""
     # Button Style 1
     [[params.navigation.button1]]
       name = "Get Started"
-      url = "blogs"
+      url = "projects"
 
     # Button Style 2
     [[params.navigation.button2]]
@@ -115,11 +115,11 @@ disqusShortname = ""
       image = "projects/tourism.jpg"
       url = "projects/project4/tourist"
 
-#    [[params.tiles.showcase]]
-#      title = "Consequat"
-#      subtitle = "Ipsum Dolor Sit Amet"
-#      image = "pic05.jpg"
-#      url = "blogs/ipsum"
+    [[params.tiles.showcase]]
+      title = "About me"
+      subtitle = "Shengwei Lai"
+      image = "pic05.jpg"
+      url = "projects/project5/me"
 
 #    [[params.tiles.showcase]]
 #      title = "Etiam"
@@ -136,15 +136,15 @@ disqusShortname = ""
     # To add more blogs just copy and paste the code.
 
   # Section Type Two
-  [params.two]
-    enable = true
-    title = "Self introduction"
-    subtitle = """Hi, my name is Shengwei Lai and I am currently a MFA2021 student in 
-    London Business School. My undergraduate school is Fudan University, School of 
-    Management. I am interested in stock markets and are looking for work opportunities 
-    of equity research in both sell-side and buy-side companies."""
-    buttonText = "Get Started"
-    url = "projects"
+#  [params.two]
+#    enable = true
+#    title = "Self introduction"
+#    subtitle = """Hi, my name is Shengwei Lai and I am currently a MFA2021 student in 
+#    London Business School. My undergraduate school is Fudan University, School of 
+#    Management. I am interested in stock markets and are looking for work opportunities 
+#    of equity research in both sell-side and buy-side companies."""
+#    buttonText = "Get Started"
+#    url = "projects"
 
 
   # Contact section
